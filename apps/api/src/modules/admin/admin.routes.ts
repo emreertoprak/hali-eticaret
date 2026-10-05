@@ -15,8 +15,11 @@ import {
   collectionInput,
   orderStatusBody,
   productInput,
+  statsQuery,
 } from './admin.schemas';
 import { AdminOrderService, AdminProductService, SimpleCrud } from './admin.service';
+import { StatsService } from './stats.service';
+import { uploadsRouter } from './uploads.routes';
 
 const tags = ['Yönetim'];
 const id = (req: Request) => Number(req.params.id);
@@ -49,9 +52,18 @@ function mountCrud(router: Router, path: string, crud: SimpleCrud, body: ZodType
 export function adminRouter(
   products = new AdminProductService(),
   orders = new AdminOrderService(),
+  stats = new StatsService(),
 ): Router {
   const router = Router();
   router.use(requireAuth, requireRole('admin'));
+  router.use(uploadsRouter());
+
+  doc('get', '/admin/stats', { tags, summary: 'Panel özeti (ciro, sipariş, stok)', auth: true, query: statsQuery });
+  router.get(
+    '/stats',
+    validate({ query: statsQuery }),
+    asyncHandler(async (req, res) => res.json(await stats.overview((req.query as unknown as { days: number }).days))),
+  );
 
   mountCrud(router, 'categories', new SimpleCrud('categories', 'Kategori', true), categoryInput, 'Kategori');
   mountCrud(router, 'collections', new SimpleCrud('collections', 'Koleksiyon', true), collectionInput, 'Koleksiyon');
@@ -95,16 +107,19 @@ export function adminRouter(
     '/orders',
     validate({ query: adminListQuery }),
     asyncHandler(async (req, res) => {
-      const q = req.query as unknown as { page: number; limit: number; status?: string };
-      res.json(await orders.list(q.page, q.limit, q.status));
+      const q = req.query as unknown as { page: number; limit: number; status?: string; q?: string };
+      res.json(await orders.list(q.page, q.limit, q.status, q.q));
     }),
   );
+
+  doc('get', '/admin/orders/:id', { tags, summary: 'Sipariş detayı (müşteri, ödemeler, izinli geçişler)', auth: true, params: idParams });
+  router.get('/orders/:id', validate({ params: idParams }), asyncHandler(async (req, res) => res.json(await orders.get(id(req)))));
 
   doc('patch', '/admin/orders/:id/status', { tags, summary: 'Sipariş durumunu güncelle', auth: true, params: idParams, body: orderStatusBody });
   router.patch(
     '/orders/:id/status',
     validate({ params: idParams, body: orderStatusBody }),
-    asyncHandler(async (req, res) => res.json(await orders.updateStatus(id(req), req.body.status))),
+    asyncHandler(async (req, res) => res.json(await orders.updateStatus(id(req), req.body))),
   );
 
   return router;

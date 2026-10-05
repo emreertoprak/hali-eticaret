@@ -103,3 +103,87 @@ describe('Yönetim', () => {
     expect(list.body.items.some((o: { orderNo: string }) => o.orderNo === order.body.order.orderNo)).toBe(true);
   });
 });
+
+// 1x1 PNG
+const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
+
+describe('Yönetim — panel, yükleme, sipariş detayı', () => {
+  let admin: string;
+  beforeAll(async () => {
+    admin = await login(ADMIN);
+  });
+
+  it('panel özeti istatistikleri döner', async () => {
+    const res = await api().get('/api/v1/admin/stats').query({ days: 14 }).set(auth(admin)).expect(200);
+    expect(res.body.series).toHaveLength(14);
+    expect(res.body.series[13].day).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(res.body.revenue.period).toEqual({ revenue: expect.any(Number), orders: expect.any(Number) });
+    expect(res.body.activeProducts).toBeGreaterThan(0);
+    expect(Array.isArray(res.body.lowStock)).toBe(true);
+    await api().get('/api/v1/admin/stats').query({ days: 1 }).set(auth(admin)).expect(400);
+  });
+
+  it('görsel yükler ve statik olarak sunar', async () => {
+    const res = await api().post('/api/v1/admin/uploads').set(auth(admin)).attach('files', PNG, 'halı.png').expect(201);
+    const [file] = res.body.files;
+    expect(file).toMatchObject({ contentType: 'image/png', size: PNG.length });
+    expect(file.url).toMatch(/^\/uploads\/[0-9a-f-]{36}\.png$/);
+    const served = await api().get(file.url).expect(200);
+    expect(served.headers['content-type']).toBe('image/png');
+    expect(served.headers['x-content-type-options']).toBe('nosniff');
+  });
+
+  it('SVG ve görsel olmayan dosyaları reddeder', async () => {
+    const svg = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>');
+    const res = await api().post('/api/v1/admin/uploads').set(auth(admin)).attach('files', svg, { filename: 'x.png', contentType: 'image/png' }).expect(400);
+    expect(res.body.error.details.files).toEqual(['x.png']);
+    await api().post('/api/v1/admin/uploads').set(auth(admin)).expect(400);
+  });
+
+  it('müşteri görsel yükleyemez', async () => {
+    const customer = await registerUser();
+    await api().post('/api/v1/admin/uploads').set(auth(customer)).attach('files', PNG, 'a.png').expect(403);
+  });
+
+  it('ürün listesi fiyat aralığı, stok ve görsel içerir', async () => {
+    const res = await api().get('/api/v1/admin/products').query({ limit: 5 }).set(auth(admin)).expect(200);
+    const p = res.body.items[0];
+    expect(p).toMatchObject({ minPrice: expect.any(Number), maxPrice: expect.any(Number), totalStock: expect.any(Number), variantCount: expect.any(Number) });
+    expect(p.maxPrice).toBeGreaterThanOrEqual(p.minPrice);
+    expect(p.imageUrl).toEqual(expect.any(String));
+  });
+
+  it('sipariş detayı, arama ve kargo bilgisiyle durum akışı', async () => {
+    const customer = await registerUser();
+    const variant = await findVariant();
+    await api().post('/api/v1/cart/items').set(auth(customer)).send({ variantId: variant.id, quantity: 1 }).expect(201);
+    const created = await api().post('/api/v1/orders').set(auth(customer)).send({ paymentMethod: 'bank_transfer', address: ADDRESS, acceptTerms: true }).expect(201);
+    const orderNo = created.body.order.orderNo;
+
+    const search = await api().get('/api/v1/admin/orders').query({ q: orderNo.toLowerCase() }).set(auth(admin)).expect(200);
+    expect(search.body.items).toHaveLength(1);
+    const id = search.body.items[0].id;
+    expect(search.body.items[0].customer.email).toMatch(/@example\.com$/);
+
+    const detail = await api().get(`/api/v1/admin/orders/${id}`).set(auth(admin)).expect(200);
+    expect(detail.body.allowedTransitions).toEqual(['confirmed', 'cancelled']);
+    expect(detail.body.customer).toMatchObject({ firstName: 'Test' });
+    expect(detail.body.payments).toEqual([]);
+
+    const confirmed = await api().patch(`/api/v1/admin/orders/${id}/status`).set(auth(admin)).send({ status: 'confirmed' }).expect(200);
+    expect(confirmed.body).toMatchObject({ paymentStatus: 'paid', allowedTransitions: ['preparing', 'cancelled'] });
+    expect(confirmed.body.paidAt).toEqual(expect.any(String));
+    await api().patch(`/api/v1/admin/orders/${id}/status`).set(auth(admin)).send({ status: 'preparing' }).expect(200);
+    await api().patch(`/api/v1/admin/orders/${id}/status`).set(auth(admin)).send({ status: 'shipped' }).expect(400);
+    const shipped = await api()
+      .patch(`/api/v1/admin/orders/${id}/status`)
+      .set(auth(admin))
+      .send({ status: 'shipped', carrier: 'Yurtiçi Kargo', trackingNumber: 'YK123456789' })
+      .expect(200);
+    expect(shipped.body).toMatchObject({ status: 'shipped', carrier: 'Yurtiçi Kargo', trackingNumber: 'YK123456789' });
+
+    const mine = await api().get(`/api/v1/orders/${orderNo}`).set(auth(customer)).expect(200);
+    expect(mine.body.trackingNumber).toBe('YK123456789');
+    await api().get('/api/v1/admin/orders/999999').set(auth(admin)).expect(404);
+  });
+});

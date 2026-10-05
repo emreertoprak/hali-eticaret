@@ -25,7 +25,8 @@ export function camelKeys(obj: Record<string, unknown>): Record<string, unknown>
   );
 }
 
-const TRANSITIONS: Record<string, string[]> = {
+/** Sipariş durum makinesi; UI izinli geçişleri sipariş detayından (allowedTransitions) okur. */
+export const TRANSITIONS: Record<string, string[]> = {
   pending_payment: ['confirmed', 'cancelled'],
   confirmed: ['preparing', 'cancelled'],
   preparing: ['shipped', 'cancelled'],
@@ -107,19 +108,46 @@ export class AdminProductService {
   constructor(private readonly db: () => Knex = getDb) {}
 
   async list(page: number, limit: number, q?: string) {
-    const base = this.db()('products as p')
+    const db = this.db();
+    const base = db('products as p')
       .join('categories as c', 'c.id', 'p.category_id')
       .modify((qb) => {
         if (q) qb.where((w) => w.where('p.name', 'like', `%${q}%`).orWhere('p.sku_base', 'like', `%${q}%`));
       });
     const [{ total }] = await base.clone().count({ total: 'p.id' });
+    const variants = db('product_variants as v')
+      .groupBy('v.product_id')
+      .select(
+        'v.product_id',
+        db.raw('MIN(COALESCE(v.discount_price, v.price)) as min_price'),
+        db.raw('MAX(COALESCE(v.discount_price, v.price)) as max_price'),
+        db.raw('SUM(CASE WHEN v.is_active THEN v.stock ELSE 0 END) as total_stock'),
+        db.raw('SUM(CASE WHEN v.is_active THEN 1 ELSE 0 END) as variant_count'),
+      );
     const rows = await base
       .clone()
-      .select('p.*', 'c.name as category_name')
+      .leftJoin(variants.as('vs'), 'vs.product_id', 'p.id')
+      .select(
+        'p.id', 'p.name', 'p.slug', 'p.sku_base', 'p.is_active', 'p.is_featured', 'p.updated_at',
+        'c.name as category_name',
+        'vs.min_price', 'vs.max_price', 'vs.total_stock', 'vs.variant_count',
+        db('product_images as pi').select('pi.url').whereRaw('pi.product_id = p.id').orderBy('pi.sort_order').limit(1).as('image_url'),
+      )
       .orderBy('p.id', 'desc')
       .limit(limit)
       .offset((page - 1) * limit);
-    return paginate(rows.map(camelKeys), Number(total), page, limit);
+    return paginate(
+      rows.map((r: any) => ({
+        ...camelKeys(r),
+        minPrice: Number(r.min_price ?? 0),
+        maxPrice: Number(r.max_price ?? 0),
+        totalStock: Number(r.total_stock ?? 0),
+        variantCount: Number(r.variant_count ?? 0),
+      })),
+      Number(total),
+      page,
+      limit,
+    );
   }
 
   async get(id: number) {
@@ -220,39 +248,95 @@ export class AdminProductService {
 export class AdminOrderService {
   constructor(private readonly db: () => Knex = getDb) {}
 
-  async list(page: number, limit: number, status?: string) {
-    const base = this.db()('orders').modify((qb) => {
-      if (status) qb.where({ status });
-    });
-    const [{ total }] = await base.clone().count({ total: '*' });
-    const orders = await base.clone().orderBy('id', 'desc').limit(limit).offset((page - 1) * limit);
+  async list(page: number, limit: number, status?: string, q?: string) {
+    const base = this.db()('orders as o')
+      .join('users as u', 'u.id', 'o.user_id')
+      .modify((qb) => {
+        if (status) qb.where('o.status', status);
+        if (q) qb.where((w) => w.where('o.order_no', 'like', `%${q.toUpperCase()}%`).orWhere('u.email', 'like', `%${q}%`));
+      });
+    const [{ total }] = await base.clone().count({ total: 'o.id' });
+    const orders = await base
+      .clone()
+      .select('o.*', 'u.email', 'u.first_name', 'u.last_name')
+      .orderBy('o.id', 'desc')
+      .limit(limit)
+      .offset((page - 1) * limit);
     const items = orders.length ? await this.db()('order_items').whereIn('order_id', orders.map((o: any) => o.id)) : [];
     return paginate(
-      orders.map((o: any) => ({ id: o.id, userId: o.user_id, ...toOrder(o, items.filter((i: any) => i.order_id === o.id)) })),
+      orders.map((o: any) => ({
+        id: o.id,
+        userId: o.user_id,
+        customer: { email: o.email, name: `${o.first_name} ${o.last_name}` },
+        ...toOrder(o, items.filter((i: any) => i.order_id === o.id)),
+      })),
       Number(total),
       page,
       limit,
     );
   }
 
-  async updateStatus(id: number, status: string) {
-    return this.db().transaction(async (trx) => {
+  async get(id: number) {
+    const order = await this.db()('orders').where({ id }).first();
+    if (!order) throw AppError.notFound('Sipariş bulunamadı.');
+    const [items, customer, payments] = await Promise.all([
+      this.db()('order_items').where({ order_id: id }).orderBy('id'),
+      this.db()('users').where({ id: order.user_id }).first('id', 'email', 'first_name', 'last_name', 'phone', 'created_at'),
+      this.db()('payments').where({ order_id: id }).orderBy('id'),
+    ]);
+    return {
+      id,
+      userId: order.user_id,
+      ...toOrder(order, items),
+      customer: customer && {
+        id: customer.id,
+        email: customer.email,
+        firstName: customer.first_name,
+        lastName: customer.last_name,
+        phone: customer.phone,
+        memberSince: new Date(customer.created_at).toISOString(),
+      },
+      payments: payments.map((p: any) => ({
+        id: p.id,
+        provider: p.provider,
+        merchantOid: p.merchant_oid,
+        amount: Number(p.amount),
+        status: p.status,
+        installmentCount: p.installment_count,
+        paymentType: p.payment_type,
+        failedReason: p.failed_reason_msg,
+        createdAt: new Date(p.created_at).toISOString(),
+        updatedAt: new Date(p.updated_at).toISOString(),
+      })),
+      allowedTransitions: TRANSITIONS[order.status] ?? [],
+    };
+  }
+
+  async updateStatus(id: number, input: { status: string; carrier?: string; trackingNumber?: string }) {
+    const { status } = input;
+    await this.db().transaction(async (trx) => {
       const order = await trx('orders').where({ id }).forUpdate().first();
       if (!order) throw AppError.notFound('Sipariş bulunamadı.');
       if (!TRANSITIONS[order.status]?.includes(status)) {
         throw AppError.conflict(`Sipariş durumu "${order.status}" → "${status}" olarak değiştirilemez.`);
       }
       const patch: Record<string, unknown> = { status, updated_at: trx.fn.now() };
-      if (status === 'confirmed' && order.payment_status === 'pending') patch.payment_status = 'paid';
+      if (status === 'confirmed' && order.payment_status === 'pending') {
+        // Havale/EFT onayı: ödeme alınmış sayılır.
+        patch.payment_status = 'paid';
+        patch.paid_at = trx.fn.now();
+      }
+      if (input.carrier) patch.carrier = input.carrier;
+      if (input.trackingNumber) patch.tracking_number = input.trackingNumber;
       if (status === 'cancelled') {
         // İptalde stok iade edilir.
         await restoreStock(trx, id);
         if (order.payment_status === 'paid') patch.payment_status = 'refunded';
+        else patch.payment_status = 'failed';
+        await trx('payments').where({ order_id: id, status: 'initiated' }).update({ status: 'failed', failed_reason_msg: 'Sipariş iptal edildi', updated_at: trx.fn.now() });
       }
       await trx('orders').where({ id }).update(patch);
-      const updated = await trx('orders').where({ id }).first();
-      const items = await trx('order_items').where({ order_id: id });
-      return { id, userId: updated.user_id, ...toOrder(updated, items) };
     });
+    return this.get(id);
   }
 }

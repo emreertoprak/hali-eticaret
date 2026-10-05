@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import { resolve } from 'node:path';
+
 import express, { type Express } from 'express';
 import useragent from 'express-useragent';
 import helmet from 'helmet';
@@ -48,6 +50,12 @@ export function createApp(): Express {
   api.use(ordersRouter());
   api.use('/admin', adminRouter());
   app.use('/api/v1', api);
+
+  // Yönetim panelinden yüklenen görseller (dosya adları UUID; içerik değişmez).
+  app.use(
+    config.uploads.publicPath,
+    express.static(resolve(config.uploads.dir), { index: false, dotfiles: 'deny', immutable: true, maxAge: '365d', fallthrough: true }),
+  );
 
   // Route'lar kaydedildikten sonra doküman üretilir.
   const openApi = buildOpenApiDocument();
