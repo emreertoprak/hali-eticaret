@@ -1,0 +1,23 @@
+{
+  "name": "hali-eticaret",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Halı e-ticaret monorepo: Express + Knex (MySQL) API ve Next.js web vitrini.",
+  "author": "Yunus Emre Ertoprak",
+  "license": "ISC",
+  "workspaces": [
+    "apps/api",
+    "apps/web",
+    "design/stitch"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w apps/api",
+    "dev:web": "npm run dev -w apps/web",
+    "build": "npm run build -w apps/api && npm run build -w apps/web",
+    "lint": "npm run lint -w apps/api && npm run lint -w apps/web",
+    "test": "npm test -w apps/api",
+    "db:migrate": "npm run migrate:latest -w apps/api",
+    "db:seed": "npm run seed:run -w apps/api",
+    "stitch:generate": "npm run generate -w design/stitch"
+  }
+}

@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS hali_test CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci;
+GRANT ALL ON hali_test.* TO 'hali'@'%';
+FLUSH PRIVILEGES;
