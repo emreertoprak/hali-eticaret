@@ -107,12 +107,21 @@ export interface User {
   lastName: string;
   phone: string | null;
   role: 'customer' | 'admin';
+  avatarUrl: string | null;
+  hasPassword: boolean;
+  googleLinked: boolean;
 }
 
+/** Refresh token yanıtta yoktur; API httpOnly çerez olarak koyar. */
 export interface AuthResponse {
   user: User;
   accessToken: string;
-  refreshToken: string;
+  expiresIn: number;
+}
+
+export interface AuthProviders {
+  password: boolean;
+  google: { enabled: boolean; clientId: string | null };
 }
 
 export interface CartItem {

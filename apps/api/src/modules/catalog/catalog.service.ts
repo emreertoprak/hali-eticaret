@@ -1,5 +1,5 @@
 import { loadConfig } from '@/config/Config';
-import { cached, CacheKeys } from '@/infra/cache';
+import { bumpNamespace, cached, CacheKeys, CacheNamespaces, namespaceVersion } from '@/infra/cache';
 import { AppError } from '@/utils/AppError';
 import { paginate } from '@/utils/pagination';
 
@@ -37,9 +37,28 @@ export class CatalogService {
     return toCollection(row);
   }
 
+  /**
+   * Ürün listesi kısa süreli önbelleklenir (her istek 4 toplama sorgusu çalıştırır). Anahtar, doğrulanmış
+   * sorgunun normalize hali + namespace sürümüdür; ürün/kategori yazımlarında sürüm artırılır. Stok
+   * düşüşleri TTL içinde yansır (ürün detayı, sepet ve sipariş stoğu her zaman canlı kontrol eder).
+   */
   async listProducts(query: ProductListQuery) {
-    const [{ rows, total }, facets] = await Promise.all([this.repo.listProducts(query), this.repo.facets(query)]);
-    return { ...paginate(rows.map(toProductListItem), total, query.page, query.limit), facets };
+    const { cache } = loadConfig();
+    const version = await namespaceVersion(CacheNamespaces.products);
+    const normalized = Object.entries(query)
+      .filter(([, v]) => v !== undefined)
+      .map(([k, v]) => `${k}=${Array.isArray(v) ? [...v].sort().join(',') : v}`)
+      .sort()
+      .join('&');
+    return cached(`products:v${version}:${normalized}`, cache.productListTtlSeconds, async () => {
+      const [{ rows, total }, facets] = await Promise.all([this.repo.listProducts(query), this.repo.facets(query)]);
+      return { ...paginate(rows.map(toProductListItem), total, query.page, query.limit), facets };
+    });
+  }
+
+  /** Katalog verisi değiştiğinde (ürün, kategori, koleksiyon) tüm liste önbelleklerini geçersiz kılar. */
+  static invalidateLists() {
+    return bumpNamespace(CacheNamespaces.products);
   }
 
   async getProduct(slug: string): Promise<ProductDetailDto> {

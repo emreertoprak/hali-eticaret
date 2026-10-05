@@ -1,5 +1,5 @@
 {
-  "env": "test",
+  "env": "production",
   "port": 4000,
   "brand": {
     "name": "HALI EVİ",
@@ -15,15 +15,15 @@
     "port": 3306,
     "user": "hali",
     "password": "hali",
-    "database": "hali_test",
+    "database": "hali",
     "pool": {
-      "min": 0,
-      "max": 10
+      "min": 2,
+      "max": 20
     }
   },
   "redis": {
     "url": "redis://127.0.0.1:6379",
-    "keyPrefix": "hali:test:"
+    "keyPrefix": "hali:perf:"
   },
   "cache": {
     "homeTtlSeconds": 300,
@@ -31,18 +31,18 @@
     "productListTtlSeconds": 30
   },
   "jwt": {
-    "accessSecret": "dev-access-secret-change-me-0123456789",
-    "refreshSecret": "dev-refresh-secret-change-me-0123456789",
+    "accessSecret": "perf-access-secret-not-for-prod-0123456789",
+    "refreshSecret": "perf-refresh-secret-not-for-prod-0123456789",
     "accessTtl": "15m",
     "refreshTtl": "7d",
     "issuer": "hali-api",
     "audience": "hali-web"
   },
   "rateLimit": {
-    "store": "memory",
+    "store": "redis",
     "windowMs": 60000,
-    "max": 10000,
-    "authMax": 10000
+    "max": 1000000,
+    "authMax": 1000000
   },
   "commerce": {
     "currency": "TRY",
@@ -75,26 +75,26 @@
       "merchantKey": "",
       "merchantSalt": "",
       "testMode": true,
-      "debug": false,
+      "debug": true,
       "timeoutLimitMinutes": 30
     }
   },
   "uploads": {
-    "dir": "./tmp/uploads-test",
+    "dir": "./uploads",
     "publicPath": "/uploads",
     "maxFileMb": 5
   },
   "security": {
-    "bcryptRounds": 4,
+    "bcryptRounds": 10,
     "loginMaxAttempts": 5,
     "loginLockMinutes": 15,
     "trustProxy": 1,
-    "exposeDocs": true,
-    "slowRequestMs": 500
+    "exposeDocs": false,
+    "slowRequestMs": 1000
   },
   "auth": {
     "refreshCookieName": "he_rt",
-    "cookieSecure": false,
+    "cookieSecure": true,
     "passwordResetTtlMinutes": 30,
     "google": {
       "clientId": ""

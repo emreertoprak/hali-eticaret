@@ -9,7 +9,13 @@ function readUser(req: Request): AuthUser | undefined {
   const header = req.headers.authorization;
   if (!header?.startsWith('Bearer ')) return undefined;
   try {
-    const payload = jwt.verify(header.slice(7), loadConfig().jwt.accessSecret) as jwt.JwtPayload;
+    const { jwt: cfg } = loadConfig();
+    // Algoritma sabitlenir ("alg: none" / algoritma karışıklığı saldırılarına karşı), issuer/audience doğrulanır.
+    const payload = jwt.verify(header.slice(7), cfg.accessSecret, {
+      algorithms: ['HS256'],
+      issuer: cfg.issuer,
+      audience: cfg.audience,
+    }) as jwt.JwtPayload;
     if (payload.typ !== 'access') return undefined;
     return { id: Number(payload.sub), email: payload.email, role: payload.role };
   } catch {

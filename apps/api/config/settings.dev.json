@@ -27,13 +27,16 @@
   },
   "cache": {
     "homeTtlSeconds": 300,
-    "catalogTtlSeconds": 120
+    "catalogTtlSeconds": 120,
+    "productListTtlSeconds": 30
   },
   "jwt": {
     "accessSecret": "dev-access-secret-change-me-0123456789",
     "refreshSecret": "dev-refresh-secret-change-me-0123456789",
     "accessTtl": "15m",
-    "refreshTtl": "7d"
+    "refreshTtl": "7d",
+    "issuer": "hali-api",
+    "audience": "hali-web"
   },
   "rateLimit": {
     "store": "redis",
@@ -80,5 +83,25 @@
     "dir": "./uploads",
     "publicPath": "/uploads",
     "maxFileMb": 5
+  },
+  "security": {
+    "bcryptRounds": 10,
+    "loginMaxAttempts": 5,
+    "loginLockMinutes": 15,
+    "trustProxy": 1,
+    "exposeDocs": true,
+    "slowRequestMs": 500
+  },
+  "auth": {
+    "refreshCookieName": "he_rt",
+    "cookieSecure": false,
+    "passwordResetTtlMinutes": 30,
+    "google": {
+      "clientId": ""
+    }
+  },
+  "mail": {
+    "transport": "log",
+    "from": "HALI EVİ <no-reply@halievi.local>"
   }
 }

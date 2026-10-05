@@ -24,13 +24,30 @@ export const configSchema = z.object({
     pool: z.object({ min: z.number().int(), max: z.number().int() }),
   }),
   redis: z.object({ url: z.string(), keyPrefix: z.string() }),
-  cache: z.object({ homeTtlSeconds: z.number().int(), catalogTtlSeconds: z.number().int() }),
+  cache: z.object({ homeTtlSeconds: z.number().int(), catalogTtlSeconds: z.number().int(), productListTtlSeconds: z.number().int() }),
   jwt: z.object({
     accessSecret: z.string().min(32),
     refreshSecret: z.string().min(32),
     accessTtl: z.string(),
     refreshTtl: z.string(),
+    issuer: z.string(),
+    audience: z.string(),
   }),
+  security: z.object({
+    bcryptRounds: z.number().int().min(4).max(15),
+    loginMaxAttempts: z.number().int().min(1),
+    loginLockMinutes: z.number().int().min(1),
+    trustProxy: z.union([z.boolean(), z.number().int(), z.string()]),
+    exposeDocs: z.boolean(),
+    slowRequestMs: z.number().int().positive(),
+  }),
+  auth: z.object({
+    refreshCookieName: z.string(),
+    cookieSecure: z.boolean(),
+    passwordResetTtlMinutes: z.number().int().min(5),
+    google: z.object({ clientId: z.string() }),
+  }),
+  mail: z.object({ transport: z.enum(['log']), from: z.string() }),
   rateLimit: z.object({
     store: z.enum(['redis', 'memory']),
     windowMs: z.number().int(),
@@ -64,6 +81,14 @@ export const configSchema = z.object({
 
 /** Ödeme sağlayıcısı PayTR ise mağaza bilgileri zorunludur. */
 const validatedConfigSchema = configSchema.superRefine((c, ctx) => {
+  if (c.env === 'production') {
+    if (c.jwt.accessSecret.startsWith('dev-') || c.jwt.refreshSecret.startsWith('dev-')) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['jwt'], message: 'Prod ortamında JWT_ACCESS_SECRET / JWT_REFRESH_SECRET ayarlanmalı.' });
+    }
+    if (!c.auth.cookieSecure) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['auth', 'cookieSecure'], message: 'Prod ortamında çerezler Secure olmalı (COOKIE_SECURE=1).' });
+    }
+  }
   if (c.payment.provider !== 'paytr') return;
   for (const key of ['merchantId', 'merchantKey', 'merchantSalt'] as const) {
     if (!c.payment.paytr[key]) {
@@ -100,6 +125,11 @@ function applyEnvOverrides(raw: Record<string, any>): Record<string, any> {
       refreshSecret: pick(env.JWT_REFRESH_SECRET || undefined, raw.jwt?.refreshSecret),
     },
     publicWebUrl: pick(env.PUBLIC_WEB_URL || undefined, raw.publicWebUrl),
+    auth: {
+      ...raw.auth,
+      cookieSecure: env.COOKIE_SECURE === undefined ? raw.auth?.cookieSecure : env.COOKIE_SECURE === '1',
+      google: { ...raw.auth?.google, clientId: pick(env.GOOGLE_CLIENT_ID || undefined, raw.auth?.google?.clientId) },
+    },
     payment: {
       ...raw.payment,
       provider: pick(env.PAYMENT_PROVIDER || undefined, raw.payment?.provider),

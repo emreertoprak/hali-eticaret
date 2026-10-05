@@ -20,16 +20,33 @@ export async function cached<T>(key: string, ttlSeconds: number, loader: () => P
   return value;
 }
 
-export async function invalidate(...patterns: string[]): Promise<void> {
+/** Belirli anahtarları siler. (KEYS taraması kullanılmaz: büyük Redis'te sunucuyu bloklar.) */
+export async function invalidate(...keys: string[]): Promise<void> {
+  if (!keys.length) return;
   try {
-    const redis = getRedis();
-    const prefix = redis.options.keyPrefix ?? '';
-    for (const pattern of patterns) {
-      const keys = await redis.keys(`${prefix}${pattern}`);
-      if (keys.length) await redis.del(...keys.map((k) => k.slice(prefix.length)));
-    }
+    await getRedis().del(...keys);
   } catch (err) {
     logger.warn(`Cache temizlenemedi: ${(err as Error).message}`);
+  }
+}
+
+/**
+ * Sürümlü namespace: anahtar sayısı belirsiz önbellekler (ör. her filtre kombinasyonu) için
+ * geçersiz kılma O(1) bir INCR'dir; eski sürümün anahtarları TTL ile kendiliğinden düşer.
+ */
+export async function namespaceVersion(ns: string): Promise<string> {
+  try {
+    return (await getRedis().get(`ver:${ns}`)) ?? '0';
+  } catch {
+    return 'x';
+  }
+}
+
+export async function bumpNamespace(...namespaces: string[]): Promise<void> {
+  try {
+    await Promise.all(namespaces.map((ns) => getRedis().incr(`ver:${ns}`)));
+  } catch (err) {
+    logger.warn(`Cache sürümü artırılamadı: ${(err as Error).message}`);
   }
 }
 
@@ -38,3 +55,5 @@ export const CacheKeys = {
   categories: 'categories:list',
   collections: 'collections:list',
 } as const;
+
+export const CacheNamespaces = { products: 'products' } as const;

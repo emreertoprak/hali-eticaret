@@ -13,6 +13,7 @@ import { createAccessLogStream } from '@/infra/logger';
 import { cors } from '@/middlewares/cors';
 import { errorHandler, notFoundHandler } from '@/middlewares/errorHandler';
 import { generalLimiter } from '@/middlewares/rateLimiter';
+import { timing } from '@/middlewares/timing';
 import { addressesRouter } from '@/modules/addresses/addresses.routes';
 import { adminRouter } from '@/modules/admin/admin.routes';
 import { authRouter } from '@/modules/auth/auth.routes';
@@ -28,7 +29,9 @@ export function createApp(): Express {
   const app = express();
 
   app.disable('x-powered-by');
-  app.set('trust proxy', 1);
+  // Ters vekil (nginx/ALB) sayısı; req.ip ve rate limit doğru istemci IP'sini görsün.
+  app.set('trust proxy', config.security.trustProxy);
+  app.use(timing);
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(cors);
   app.use(express.json({ limit: '1mb' }));
@@ -59,8 +62,10 @@ export function createApp(): Express {
 
   // Route'lar kaydedildikten sonra doküman üretilir.
   const openApi = buildOpenApiDocument();
-  app.get('/docs.json', (_req, res) => res.json(openApi));
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(openApi));
+  if (config.security.exposeDocs) {
+    app.get('/docs.json', (_req, res) => res.json(openApi));
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(openApi));
+  }
 
   app.use(notFoundHandler);
   app.use(errorHandler);

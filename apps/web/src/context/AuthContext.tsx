@@ -18,53 +18,59 @@ interface AuthContextValue {
   user: User | null;
   ready: boolean;
   login: (email: string, password: string) => Promise<User>;
+  loginWithGoogle: (credential: string) => Promise<User>;
   register: (input: RegisterInput) => Promise<User>;
-  logout: () => void;
-  /** Access token ekleyerek istek atar; süresi dolmuşsa bir kez refresh dener. */
+  /** Şifre sıfırlama / değiştirme gibi oturum döndüren işlemlerin sonucunu uygular. */
+  applySession: (auth: AuthResponse) => void;
+  logout: () => Promise<void>;
+  /** Access token ekleyerek istek atar; süresi dolmuşsa çerezle bir kez yeniler. */
   authFetch: <T>(path: string, init?: RequestInit) => Promise<T>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+/**
+ * Oturum modeli: kısa ömürlü access token yalnızca bellekte tutulur (localStorage'a yazılmaz);
+ * refresh token API'nin koyduğu httpOnly çerezdedir ve JS tarafından okunamaz. Sayfa yenilendiğinde
+ * /auth/refresh çağrısı çerezle yeni bir access token alır.
+ */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
+  const accessToken = useRef<string | null>(null);
   const refreshing = useRef<Promise<string | null> | null>(null);
 
-  const persist = useCallback((auth: AuthResponse | null) => {
-    storage.set(STORAGE_KEYS.accessToken, auth?.accessToken ?? null);
-    storage.set(STORAGE_KEYS.refreshToken, auth?.refreshToken ?? null);
+  const applySession = useCallback((auth: AuthResponse | null) => {
+    accessToken.current = auth?.accessToken ?? null;
     setUser(auth?.user ?? null);
   }, []);
 
-  const refresh = useCallback(async (): Promise<string | null> => {
-    const refreshToken = storage.get(STORAGE_KEYS.refreshToken);
-    if (!refreshToken) return null;
-    refreshing.current ??= apiFetch<AuthResponse>('/auth/refresh', { method: 'POST', body: JSON.stringify({ refreshToken }) })
+  const refresh = useCallback((): Promise<string | null> => {
+    refreshing.current ??= apiFetch<AuthResponse>('/auth/refresh', { method: 'POST', credentials: 'same-origin' })
       .then((auth) => {
-        persist(auth);
+        applySession(auth);
         return auth.accessToken;
       })
       .catch(() => {
-        persist(null);
+        applySession(null);
         return null;
       })
       .finally(() => {
         refreshing.current = null;
       });
     return refreshing.current;
-  }, [persist]);
+  }, [applySession]);
 
   const authFetch = useCallback(
     async <T,>(path: string, init: RequestInit = {}): Promise<T> => {
-      const withToken = (token: string | null) => ({
+      const withToken = (token: string | null): RequestInit => ({
         ...init,
         headers: { ...(init.headers as Record<string, string>), ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       });
       try {
-        return await apiFetch<T>(path, withToken(storage.get(STORAGE_KEYS.accessToken)));
+        return await apiFetch<T>(path, withToken(accessToken.current));
       } catch (err) {
-        if (err instanceof ApiError && err.status === 401 && storage.get(STORAGE_KEYS.refreshToken)) {
+        if (err instanceof ApiError && err.status === 401) {
           const token = await refresh();
           if (token) return apiFetch<T>(path, withToken(token));
         }
@@ -75,40 +81,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
-    if (!storage.get(STORAGE_KEYS.accessToken) && !storage.get(STORAGE_KEYS.refreshToken)) {
+    // Önceki sürümün localStorage'da tuttuğu tokenları temizle.
+    storage.set(STORAGE_KEYS.accessToken, null);
+    storage.set(STORAGE_KEYS.refreshToken, null);
+    // Oturum işaret çerezi yoksa (hiç giriş yapılmamış) yenileme denemeye gerek yok.
+    if (!/(?:^|;\s*)he_session=1/.test(document.cookie)) {
       setReady(true);
       return;
     }
-    authFetch<User>('/auth/me')
-      .then(setUser)
-      .catch(() => persist(null))
-      .finally(() => setReady(true));
-  }, [authFetch, persist]);
+    void refresh().finally(() => setReady(true));
+  }, [refresh]);
 
   const login = useCallback(
     async (email: string, password: string) => {
       const auth = await apiFetch<AuthResponse>('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
-      persist(auth);
+      applySession(auth);
       return auth.user;
     },
-    [persist],
+    [applySession],
+  );
+
+  const loginWithGoogle = useCallback(
+    async (credential: string) => {
+      const auth = await apiFetch<AuthResponse>('/auth/google', { method: 'POST', body: JSON.stringify({ credential }) });
+      applySession(auth);
+      return auth.user;
+    },
+    [applySession],
   );
 
   const register = useCallback(
     async (input: RegisterInput) => {
       const auth = await apiFetch<AuthResponse>('/auth/register', { method: 'POST', body: JSON.stringify(input) });
-      persist(auth);
+      applySession(auth);
       return auth.user;
     },
-    [persist],
+    [applySession],
   );
 
-  const logout = useCallback(() => {
-    persist(null);
+  const logout = useCallback(async () => {
+    await apiFetch('/auth/logout', { method: 'POST' }).catch(() => undefined);
+    applySession(null);
     storage.set(STORAGE_KEYS.cartToken, null);
-  }, [persist]);
+  }, [applySession]);
 
-  const value = useMemo(() => ({ user, ready, login, register, logout, authFetch }), [user, ready, login, register, logout, authFetch]);
+  const value = useMemo(
+    () => ({ user, ready, login, loginWithGoogle, register, applySession, logout, authFetch }),
+    [user, ready, login, loginWithGoogle, register, applySession, logout, authFetch],
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

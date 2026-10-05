@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { PasswordSettings } from '@/components/ui/PasswordSettings';
 import { RequireAuth } from '@/components/ui/RequireAuth';
 import { useAuth } from '@/context/AuthContext';
 
@@ -31,15 +32,17 @@ export default function AccountPage() {
               <MapPin /> <span className="font-bold">Adreslerim & Ödeme</span>
             </Link>
             <button
-              onClick={() => {
-                logout();
-                router.push('/');
+              onClick={async () => {
+                // Önce sayfadan çık: oturum düşünce RequireAuth giriş sayfasına yönlendirmesin.
+                router.replace('/');
+                await logout();
               }}
               className="flex items-center gap-3 rounded-xl border border-line bg-white p-5 text-left shadow-card hover:shadow-card-hover"
             >
               <LogOut /> <span className="font-bold">Çıkış Yap</span>
             </button>
           </div>
+          <PasswordSettings />
         </div>
       </RequireAuth>
     </>

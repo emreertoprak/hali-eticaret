@@ -1,0 +1,50 @@
+{
+  "$comment": "p95 bütçeleri (ms). Tek makinede, API + MySQL + Redis aynı host, 20 eşzamanlı bağlantı. Login bilinçli olarak bcrypt maliyetiyle sınırlıdır.",
+  "defaults": {
+    "maxErrorRate": 0.001
+  },
+  "scenarios": {
+    "health": {
+      "p95": 25
+    },
+    "home": {
+      "p95": 25
+    },
+    "categories": {
+      "p95": 25
+    },
+    "products-list": {
+      "p95": 60
+    },
+    "products-filtered": {
+      "p95": 60
+    },
+    "products-search": {
+      "p95": 80
+    },
+    "product-detail": {
+      "p95": 40
+    },
+    "cart-get": {
+      "p95": 40
+    },
+    "cart-update": {
+      "p95": 60
+    },
+    "auth-me": {
+      "p95": 25
+    },
+    "orders-list": {
+      "p95": 50
+    },
+    "admin-stats": {
+      "p95": 150
+    },
+    "auth-login": {
+      "p95": 600
+    },
+    "products-search-cold": {
+      "p95": 120
+    }
+  }
+}

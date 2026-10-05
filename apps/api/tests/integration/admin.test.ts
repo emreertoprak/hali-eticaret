@@ -50,6 +50,9 @@ describe('Yönetim', () => {
 
     const detail = await api().get('/api/v1/products/test-hali-admin').expect(200);
     expect(detail.body).toMatchObject({ price: 800, oldPrice: 1000, discountRate: 20 });
+    // liste önbelleğe alınır…
+    const listed = await api().get('/api/v1/products').query({ q: 'Test Halı Admin' }).expect(200);
+    expect(listed.body.items[0]).toMatchObject({ slug: 'test-hali-admin', price: 800 });
 
     const keep = created.body.variants.find((v: { sku: string }) => v.sku === 'TST-ADM-80150');
     await api()
@@ -57,6 +60,9 @@ describe('Yönetim', () => {
       .set(auth(admin))
       .send({ ...body, variants: [{ ...body.variants[0], id: keep.id, price: 1200, discountPrice: null }] })
       .expect(200);
+    // …ve yönetici güncellemesiyle geçersiz kılınır
+    const relisted = await api().get('/api/v1/products').query({ q: 'Test Halı Admin' }).expect(200);
+    expect(relisted.body.items[0]).toMatchObject({ price: 1200, oldPrice: null });
     const afterUpdate = await api().get('/api/v1/products/test-hali-admin').expect(200);
     expect(afterUpdate.body.variants).toHaveLength(1);
     expect(afterUpdate.body).toMatchObject({ price: 1200, oldPrice: null });

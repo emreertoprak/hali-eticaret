@@ -20,7 +20,9 @@
     "migrate:latest": "npm run knex -- migrate:latest",
     "migrate:rollback": "npm run knex -- migrate:rollback",
     "migrate:make": "npm run knex -- migrate:make -x ts",
-    "seed:run": "npm run knex -- seed:run"
+    "seed:run": "npm run knex -- seed:run",
+    "perf": "ts-node -r tsconfig-paths/register --transpile-only perf/run.ts",
+    "perf:ci": "npm run build:bundle && npm run perf -- --start"
   },
   "author": "Yunus Emre Ertoprak",
   "license": "ISC",
@@ -36,6 +38,7 @@
     "express-rate-limit": "^8.2.1",
     "express-useragent": "^1.0.15",
     "file-stream-rotator": "^0.6.1",
+    "google-auth-library": "^11.1.0",
     "helmet": "^7.0.0",
     "ioredis": "^5.3.2",
     "jsonwebtoken": "^9.0.2",

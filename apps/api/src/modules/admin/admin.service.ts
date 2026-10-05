@@ -2,6 +2,7 @@ import type { Knex } from 'knex';
 
 import { CacheKeys, invalidate } from '@/infra/cache';
 import { getDb } from '@/infra/db';
+import { CatalogService } from '@/modules/catalog/catalog.service';
 import { toOrder } from '@/modules/orders/orders.service';
 import { restoreStock } from '@/modules/orders/stock';
 import { AppError } from '@/utils/AppError';
@@ -55,7 +56,7 @@ export class SimpleCrud {
   ) {}
 
   private async invalidateCaches() {
-    await invalidate(CacheKeys.home, CacheKeys.categories, CacheKeys.collections);
+    await Promise.all([invalidate(CacheKeys.home, CacheKeys.categories, CacheKeys.collections), CatalogService.invalidateLists()]);
   }
 
   async list() {
@@ -226,7 +227,7 @@ export class AdminProductService {
         await this.write(trx, newId, input);
         return newId;
       });
-      await invalidate(CacheKeys.home, CacheKeys.categories);
+      await Promise.all([invalidate(CacheKeys.home, CacheKeys.categories), CatalogService.invalidateLists()]);
       return this.get(id);
     } catch (err) {
       throw mapDbError(err, 'Ürün');
@@ -243,7 +244,7 @@ export class AdminProductService {
     } catch (err) {
       throw mapDbError(err, 'Ürün');
     }
-    await invalidate(CacheKeys.home, CacheKeys.categories);
+    await Promise.all([invalidate(CacheKeys.home, CacheKeys.categories), CatalogService.invalidateLists()]);
     return this.get(id);
   }
 
@@ -251,7 +252,7 @@ export class AdminProductService {
   async deactivate(id: number) {
     const updated = await this.db()('products').where({ id }).update({ is_active: false, updated_at: this.db().fn.now() });
     if (!updated) throw AppError.notFound('Ürün bulunamadı.');
-    await invalidate(CacheKeys.home, CacheKeys.categories);
+    await Promise.all([invalidate(CacheKeys.home, CacheKeys.categories), CatalogService.invalidateLists()]);
   }
 }
 

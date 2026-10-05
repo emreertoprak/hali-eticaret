@@ -23,6 +23,6 @@
     "types": ["node", "jest"]
   },
   "ts-node": { "files": true },
-  "include": ["src", "tests", "knexfile.ts"],
+  "include": ["src", "tests", "perf", "knexfile.ts"],
   "exclude": ["node_modules", "dist"]
 }

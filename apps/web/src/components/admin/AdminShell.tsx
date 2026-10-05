@@ -80,9 +80,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <span className="text-muted">{user?.email}</span>
             <button
               className="flex items-center gap-1 font-semibold hover:text-brand-red"
-              onClick={() => {
-                logout();
-                router.push('/giris');
+              onClick={async () => {
+                router.replace('/giris');
+                await logout();
               }}
             >
               <LogOut size={15} /> Çıkış
