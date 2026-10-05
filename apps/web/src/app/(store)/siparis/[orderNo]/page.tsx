@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle2 } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Loader2, Truck } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
@@ -11,36 +11,98 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { OrderStatusBadge } from '@/components/ui/OrderCard';
 import { RequireAuth } from '@/components/ui/RequireAuth';
 import { useAuth } from '@/context/AuthContext';
+import { useCart } from '@/context/CartContext';
 import { formatDate, formatPrice } from '@/lib/format';
+import { paymentUrlKey, sessionStore } from '@/lib/storage';
 import type { Order } from '@/lib/types';
+
+const POLL_INTERVAL_MS = 2000;
+const POLL_LIMIT = 15;
 
 function OrderDetail() {
   const { orderNo } = useParams<{ orderNo: string }>();
-  const isNew = useSearchParams().get('yeni') === '1';
+  const params = useSearchParams();
+  const isNew = params.get('yeni') === '1';
+  const paymentResult = params.get('odeme'); // PayTR dönüşü: "tamam" | "hata"
   const { authFetch } = useAuth();
+  const { reload: reloadCart } = useCart();
   const [order, setOrder] = useState<Order | null | undefined>(undefined);
+  const [polls, setPolls] = useState(0);
+
+  // PayTR dönüş sayfası iframe içinde açılırsa üst pencereye taşı.
+  useEffect(() => {
+    if (window.top && window.top !== window.self) window.top.location.href = window.location.href;
+  }, []);
 
   useEffect(() => {
+    if (paymentResult) sessionStore.set(paymentUrlKey(orderNo), null);
     authFetch<Order>(`/orders/${orderNo}`).then(setOrder).catch(() => setOrder(null));
-  }, [authFetch, orderNo]);
+  }, [authFetch, orderNo, paymentResult]);
+
+  // Ödeme bildirimi PayTR'den sunucuya birkaç saniye gecikmeli gelebilir: onaylanana kadar yokla.
+  const verifying = paymentResult === 'tamam' && order?.status === 'pending_payment' && polls < POLL_LIMIT;
+  useEffect(() => {
+    if (!verifying) return;
+    const id = setTimeout(() => {
+      authFetch<Order>(`/orders/${orderNo}`)
+        .then((next) => {
+          setOrder(next);
+          if (next.paymentStatus === 'paid') void reloadCart();
+        })
+        .finally(() => setPolls((n) => n + 1));
+    }, POLL_INTERVAL_MS);
+    return () => clearTimeout(id);
+  }, [verifying, polls, authFetch, orderNo, reloadCart]);
 
   if (order === undefined) return <p className="py-16 text-center text-muted">Yükleniyor…</p>;
   if (order === null) return <EmptyState title="Sipariş bulunamadı" href="/hesabim/siparisler" cta="Siparişlerim" />;
   const a = order.shippingAddress;
+  const awaitingCard =
+    order.paymentMethod === 'card' &&
+    order.status === 'pending_payment' &&
+    (!order.paymentExpiresAt || new Date(order.paymentExpiresAt).getTime() > Date.now());
 
   return (
     <div className="space-y-6">
-      {isNew && (
+      {verifying && (
+        <div className="flex items-center gap-3 rounded-xl bg-cream p-5">
+          <Loader2 className="shrink-0 animate-spin" />
+          <p className="font-semibold">Ödemeniz doğrulanıyor, lütfen bekleyin…</p>
+        </div>
+      )}
+      {(isNew || paymentResult === 'tamam') && order.paymentStatus === 'paid' && (
         <div className="flex items-start gap-3 rounded-xl bg-[#e3f3ea] p-5 text-[#14532d]">
           <CheckCircle2 className="shrink-0" />
           <div>
             <p className="font-bold">Siparişiniz alındı, teşekkür ederiz!</p>
-            <p className="text-[14px]">
-              {order.paymentMethod === 'bank_transfer'
-                ? 'Havale/EFT açıklamasına sipariş numaranızı yazmayı unutmayın. IBAN: TR00 0000 0000 0000 0000 0000 00'
-                : 'Ödemeniz onaylandı. Siparişiniz kısa sürede hazırlanacak.'}
-            </p>
+            <p className="text-[14px]">Ödemeniz onaylandı. Siparişiniz kısa sürede hazırlanacak.</p>
           </div>
+        </div>
+      )}
+      {isNew && order.paymentMethod === 'bank_transfer' && order.status === 'pending_payment' && (
+        <div className="flex items-start gap-3 rounded-xl bg-[#e3f3ea] p-5 text-[#14532d]">
+          <CheckCircle2 className="shrink-0" />
+          <div>
+            <p className="font-bold">Siparişiniz alındı, teşekkür ederiz!</p>
+            <p className="text-[14px]">Havale/EFT açıklamasına sipariş numaranızı yazmayı unutmayın. IBAN: TR00 0000 0000 0000 0000 0000 00</p>
+          </div>
+        </div>
+      )}
+      {awaitingCard && !verifying && (
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-gold/20 p-5">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="shrink-0" />
+            <div>
+              <p className="font-bold">{paymentResult === 'hata' ? 'Ödeme tamamlanamadı' : 'Ödeme bekleniyor'}</p>
+              <p className="text-[14px]">
+                {paymentResult === 'hata' ? 'Kartınızdan ücret alınmadı. ' : ''}
+                {order.paymentExpiresAt ? `Ödemeyi ${formatDate(order.paymentExpiresAt)} saatine kadar tamamlayabilirsiniz.` : ''}
+              </p>
+            </div>
+          </div>
+          <Link href={`/odeme/guvenli/${order.orderNo}`} className="btn-primary">
+            Ödemeyi Tamamla
+          </Link>
         </div>
       )}
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -77,6 +139,15 @@ function OrderDetail() {
               {a.addressLine}, {a.district}/{a.city} · {a.phone}
             </p>
           </div>
+          {order.trackingNumber && (
+            <div>
+              <p className="label-eyebrow mb-1 text-muted">Kargo</p>
+              <p className="flex items-center gap-2 font-semibold">
+                <Truck size={16} /> {order.carrier}
+              </p>
+              <p className="text-muted">Takip no: {order.trackingNumber}</p>
+            </div>
+          )}
           <div>
             <p className="label-eyebrow mb-1 text-muted">Ödeme</p>
             <p>

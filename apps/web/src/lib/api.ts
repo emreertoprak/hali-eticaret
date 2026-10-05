@@ -16,9 +16,11 @@ const baseUrl = () => (typeof window === 'undefined' ? (process.env.API_URL ?? '
 
 export async function apiFetch<T>(path: string, init: RequestInit & { revalidate?: number } = {}): Promise<T> {
   const { revalidate, headers, ...rest } = init;
+  // FormData gönderilirken Content-Type'ı tarayıcı (multipart boundary ile) belirler.
+  const isForm = typeof FormData !== 'undefined' && rest.body instanceof FormData;
   const res = await fetch(`${baseUrl()}/api/v1${path}`, {
     ...rest,
-    headers: { 'Content-Type': 'application/json', ...headers },
+    headers: { ...(isForm ? {} : { 'Content-Type': 'application/json' }), ...headers },
     ...(revalidate !== undefined ? { next: { revalidate } } : {}),
   });
   if (res.status === 204) return undefined as T;

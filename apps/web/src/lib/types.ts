@@ -170,6 +170,10 @@ export interface Order {
   shippingAddress: Record<string, string>;
   note: string | null;
   createdAt: string;
+  paidAt: string | null;
+  paymentExpiresAt: string | null;
+  carrier: string | null;
+  trackingNumber: string | null;
   items: {
     productId: number | null;
     variantId: number | null;
@@ -194,4 +198,16 @@ export interface Paginated<T> {
 
 export interface ApiErrorBody {
   error: { code: string; message: string; details?: unknown };
+}
+
+export interface PaymentStart {
+  type: 'iframe' | 'completed';
+  provider: 'paytr' | 'mock';
+  merchantOid: string;
+  iframeUrl?: string;
+}
+
+export interface CreateOrderResponse {
+  order: Order;
+  payment: PaymentStart | null;
 }

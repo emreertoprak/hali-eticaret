@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Tarayıcıdan gelen /api/* istekleri backend'e proxy'lenir (CORS gerekmez).
   async rewrites() {
-    return [{ source: '/api/:path*', destination: `${API_URL}/api/:path*` }];
+    return [
+      { source: '/api/:path*', destination: `${API_URL}/api/:path*` },
+      // Yönetim panelinden yüklenen görseller API tarafından sunulur.
+      { source: '/uploads/:path*', destination: `${API_URL}/uploads/:path*` },
+    ];
   },
   images: {
     dangerouslyAllowSVG: true,

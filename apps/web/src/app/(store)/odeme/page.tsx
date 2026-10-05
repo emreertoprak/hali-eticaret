@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, CreditCard, Landmark, Lock } from 'lucide-react';
+import { Check, CreditCard, Landmark, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -14,7 +14,8 @@ import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { ApiError } from '@/lib/api';
 import { formatPrice } from '@/lib/format';
-import type { Address, Order } from '@/lib/types';
+import { paymentUrlKey, sessionStore } from '@/lib/storage';
+import type { Address, CreateOrderResponse } from '@/lib/types';
 
 const STEPS = ['Sepet', 'Adres & Ödeme', 'Onay'];
 
@@ -50,7 +51,6 @@ function Checkout() {
   const [addresses, setAddresses] = useState<Address[] | null>(null);
   const [addressId, setAddressId] = useState<number | 'new'>('new');
   const [method, setMethod] = useState<'card' | 'bank_transfer'>('card');
-  const [installment, setInstallment] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -65,8 +65,6 @@ function Checkout() {
 
   if (!cart) return <p className="py-16 text-center text-muted">Yükleniyor…</p>;
   if (!cart.items.length) return <EmptyState title="Sepetiniz boş" text="Ödeme adımına geçmek için sepetinize ürün ekleyin." href="/urunler" cta="Alışverişe Başla" />;
-
-  const installmentOptions = [1, 3, 5];
 
   const submit = async (form: HTMLFormElement) => {
     const d = new FormData(form);
@@ -86,17 +84,21 @@ function Checkout() {
         const saved = await authFetch<Address>('/addresses', { method: 'POST', body: JSON.stringify({ ...addressInput, title: s('title') || 'Ev' }) });
         chosenAddressId = saved.id;
       }
-      const order = await authFetch<Order>('/orders', {
+      const { order, payment } = await authFetch<CreateOrderResponse>('/orders', {
         method: 'POST',
         body: JSON.stringify({
           ...(chosenAddressId ? { addressId: chosenAddressId } : { address: addressInput }),
           paymentMethod: method,
-          installmentCount: method === 'card' ? installment : 1,
-          ...(method === 'card' ? { card: { holderName: s('holderName'), number: s('cardNumber'), expiry: s('expiry'), cvv: s('cvv') } } : {}),
           note: s('note') || undefined,
           acceptTerms: Boolean(d.get('acceptTerms')),
         }),
       });
+      if (payment?.type === 'iframe' && payment.iframeUrl) {
+        // Kart: PayTR güvenli ödeme sayfasına geç. Sepet, ödeme onaylanınca temizlenir.
+        sessionStore.set(paymentUrlKey(order.orderNo), payment.iframeUrl);
+        router.push(`/odeme/guvenli/${order.orderNo}`);
+        return;
+      }
       await reload();
       router.push(`/siparis/${order.orderNo}?yeni=1`);
     } catch (err) {
@@ -173,44 +175,17 @@ function Checkout() {
             })}
           </div>
           {method === 'card' ? (
-            <>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="sm:col-span-2">
-                  <Field label="Kart Üzerindeki İsim" name="holderName" autoComplete="cc-name" />
-                </div>
-                <div className="sm:col-span-2">
-                  <Field label="Kart Numarası" name="cardNumber" inputMode="numeric" autoComplete="cc-number" placeholder="0000 0000 0000 0000" pattern="[0-9 ]{15,23}" />
-                </div>
-                <Field label="Son Kullanma (AA/YY)" name="expiry" autoComplete="cc-exp" placeholder="12/29" pattern="(0[1-9]|1[0-2])/[0-9]{2}" />
-                <Field label="CVV" name="cvv" inputMode="numeric" autoComplete="cc-csc" placeholder="123" pattern="[0-9]{3,4}" />
+            <div className="flex gap-3 rounded-lg bg-cream p-4 text-[14px]">
+              <ShieldCheck className="mt-0.5 shrink-0" size={20} />
+              <div>
+                <p className="font-bold">Kart bilgileriniz PayTR güvenli ödeme sayfasında alınır.</p>
+                <p className="mt-1 text-muted">
+                  Kart bilgileriniz sitemizde saklanmaz. Taksit seçimini ödeme sayfasında yapabilirsiniz:
+                  10.000 TL üzeri 3, 15.000 TL üzeri 5 taksit vade farksızdır.
+                  {cart.maxInstallment > 1 && <strong className="text-ink"> Bu sipariş için {cart.maxInstallment} taksite kadar.</strong>}
+                </p>
               </div>
-              <fieldset className="mt-6">
-                <legend className="label-eyebrow mb-3">Taksit Seçenekleri</legend>
-                <table className="w-full text-[14px]">
-                  <tbody>
-                    {installmentOptions.map((n) => {
-                      const disabled = n > cart.maxInstallment;
-                      return (
-                        <tr key={n} className={`border-b border-line ${disabled ? 'text-muted/60' : ''}`}>
-                          <td className="py-3">
-                            <label className="flex items-center gap-3">
-                              <input type="radio" name="installment" disabled={disabled} checked={installment === n} onChange={() => setInstallment(n)} className="size-4 accent-[#ffc94d]" />
-                              {n === 1 ? 'Tek Çekim' : `${n} Taksit`}
-                              {disabled && <span className="text-[12px]">({n === 3 ? '10.000' : '15.000'} TL üzeri)</span>}
-                            </label>
-                          </td>
-                          <td className="py-3 text-right">{n === 1 ? '' : `${n} × ${formatPrice(Math.round((cart.total / n) * 100) / 100)}`}</td>
-                          <td className="py-3 text-right font-bold">{formatPrice(cart.total)}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </fieldset>
-              <p className="mt-3 flex items-center gap-1.5 text-[12px] text-muted">
-                <Lock size={12} /> Demo ortamı: kart bilgileri saklanmaz, ödeme simüle edilir.
-              </p>
-            </>
+            </div>
           ) : (
             <p className="rounded-lg bg-cream p-4 text-[14px]">Siparişiniz oluşturulduktan sonra IBAN bilgileri gösterilecektir. Ödemeniz onaylandığında siparişiniz hazırlanır.</p>
           )}
@@ -255,7 +230,7 @@ function Checkout() {
           </p>
         )}
         <button className="btn-primary w-full" disabled={pending}>
-          {pending ? 'İşleniyor…' : 'Ödemeyi Tamamla'}
+          {pending ? 'İşleniyor…' : method === 'card' ? 'Güvenli Ödemeye Geç' : 'Siparişi Onayla'}
         </button>
       </aside>
     </form>

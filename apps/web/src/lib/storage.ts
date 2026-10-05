@@ -17,6 +17,27 @@ export const storage = {
   },
 };
 
+/** Sekme ömrü boyunca tutulan değerler (ör. PayTR iframe URL'i). */
+export const sessionStore = {
+  get(key: string): string | null {
+    try {
+      return window.sessionStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  set(key: string, value: string | null): void {
+    try {
+      if (value === null) window.sessionStorage.removeItem(key);
+      else window.sessionStorage.setItem(key, value);
+    } catch {
+      /* yoksay */
+    }
+  },
+};
+
+export const paymentUrlKey = (orderNo: string) => `he.payment.${orderNo}`;
+
 export const STORAGE_KEYS = {
   accessToken: 'he.accessToken',
   refreshToken: 'he.refreshToken',
