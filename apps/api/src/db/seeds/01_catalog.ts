@@ -10,7 +10,7 @@ const DESCRIPTION = (name: string, material: string, origin: string) =>
 export async function seed(knex: Knex): Promise<void> {
   // Bağımlılık sırasına göre temizle (FK).
   for (const table of [
-    'order_items', 'orders', 'cart_items', 'carts', 'addresses', 'product_collections', 'product_variants',
+    'payments', 'order_items', 'orders', 'cart_items', 'carts', 'addresses', 'product_collections', 'product_variants',
     'product_images', 'products', 'collections', 'categories', 'banners', 'announcements', 'users',
   ]) {
     await knex(table).delete();

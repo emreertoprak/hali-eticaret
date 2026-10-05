@@ -1,33 +1,84 @@
 {
   "env": "test",
   "port": 4000,
-  "brand": { "name": "HALI EVİ", "whatsapp": "905555555555" },
-  "cors": { "origins": ["http://localhost:3000"] },
+  "brand": {
+    "name": "HALI EVİ",
+    "whatsapp": "905555555555"
+  },
+  "cors": {
+    "origins": [
+      "http://localhost:3000"
+    ]
+  },
   "db": {
     "host": "127.0.0.1",
     "port": 3306,
     "user": "hali",
     "password": "hali",
     "database": "hali_test",
-    "pool": { "min": 0, "max": 10 }
+    "pool": {
+      "min": 0,
+      "max": 10
+    }
   },
-  "redis": { "url": "redis://127.0.0.1:6379", "keyPrefix": "hali:test:" },
-  "cache": { "homeTtlSeconds": 300, "catalogTtlSeconds": 120 },
+  "redis": {
+    "url": "redis://127.0.0.1:6379",
+    "keyPrefix": "hali:test:"
+  },
+  "cache": {
+    "homeTtlSeconds": 300,
+    "catalogTtlSeconds": 120
+  },
   "jwt": {
     "accessSecret": "dev-access-secret-change-me-0123456789",
     "refreshSecret": "dev-refresh-secret-change-me-0123456789",
     "accessTtl": "15m",
     "refreshTtl": "7d"
   },
-  "rateLimit": { "store": "memory", "windowMs": 60000, "max": 10000, "authMax": 10000 },
+  "rateLimit": {
+    "store": "memory",
+    "windowMs": 60000,
+    "max": 10000,
+    "authMax": 10000
+  },
   "commerce": {
     "currency": "TRY",
     "shippingFee": 149.9,
     "freeShippingThreshold": 1500,
     "installments": [
-      { "minTotal": 15000, "maxCount": 5 },
-      { "minTotal": 10000, "maxCount": 3 }
+      {
+        "minTotal": 15000,
+        "maxCount": 5
+      },
+      {
+        "minTotal": 10000,
+        "maxCount": 3
+      }
     ]
   },
-  "logging": { "level": "warn", "dir": "./logs", "accessLog": false }
+  "logging": {
+    "level": "warn",
+    "dir": "./logs",
+    "accessLog": false
+  },
+  "publicWebUrl": "http://localhost:3000",
+  "payment": {
+    "provider": "mock",
+    "pendingOrderTtlMinutes": 30,
+    "paytr": {
+      "apiUrl": "https://www.paytr.com/odeme/api/get-token",
+      "iframeBaseUrl": "https://www.paytr.com/odeme/guvenli/",
+      "merchantId": "",
+      "merchantKey": "",
+      "merchantSalt": "",
+      "testMode": true,
+      "debug": false,
+      "timeoutLimitMinutes": 30
+    }
+  },
+  "uploads": {
+    "dir": "./tmp/uploads-test",
+    "publicPath": "/uploads",
+    "maxFileMb": 5
+  }
 }

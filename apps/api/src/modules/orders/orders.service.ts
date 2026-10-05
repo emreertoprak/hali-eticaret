@@ -8,6 +8,7 @@ import { AddressService } from '@/modules/addresses/addresses.service';
 import { CartRepository } from '@/modules/cart/cart.repository';
 import { CartService, toCartItem } from '@/modules/cart/cart.service';
 import { calculateTotals } from '@/modules/cart/pricing';
+import { PaymentService,type PaymentStart } from '@/modules/payments/payments.service';
 import { AppError } from '@/utils/AppError';
 import { paginate } from '@/utils/pagination';
 
@@ -32,6 +33,10 @@ export const toOrder = (o: any, items: any[]): OrderDto => ({
   shippingAddress: typeof o.shipping_address === 'string' ? JSON.parse(o.shipping_address) : o.shipping_address,
   note: o.note,
   createdAt: new Date(o.created_at).toISOString(),
+  paidAt: o.paid_at ? new Date(o.paid_at).toISOString() : null,
+  paymentExpiresAt: o.payment_expires_at ? new Date(o.payment_expires_at).toISOString() : null,
+  carrier: o.carrier ?? null,
+  trackingNumber: o.tracking_number ?? null,
   items: items.map((i) => ({
     productId: i.product_id,
     variantId: i.variant_id,
@@ -52,23 +57,28 @@ export class OrderService {
     private readonly carts = new CartService(),
     private readonly cartRepo = new CartRepository(),
     private readonly addresses = new AddressService(),
+    private readonly payments = new PaymentService(),
   ) {}
 
-  /** Ödeme sağlayıcısı entegrasyonu gelene kadar kart ödemesi başarılı kabul edilir. */
-  private chargeMock(method: CreateOrderBody['paymentMethod']) {
-    return method === 'card'
-      ? { status: 'confirmed' as const, paymentStatus: 'paid' as const }
-      : { status: 'pending_payment' as const, paymentStatus: 'pending' as const };
-  }
-
-  async create(userId: number, body: CreateOrderBody, cartToken?: string): Promise<OrderDto> {
+  /**
+   * Sepetten sipariş oluşturur. Stok her iki yöntemde de sipariş anında rezerve edilir.
+   * - Kart: sipariş `pending_payment` olarak açılır, sepet ödeme onaylanınca temizlenir ve
+   *   ödeme sağlayıcısı (PayTR iframe / mock) başlatılır. Süresi dolan ödemeler iptal edilir.
+   * - Havale: sipariş `pending_payment` olarak açılır, sepet hemen temizlenir; onay yöneticidedir.
+   */
+  async create(
+    userId: number,
+    body: CreateOrderBody,
+    cartToken: string | undefined,
+    userIp: string,
+  ): Promise<{ order: OrderDto; payment: PaymentStart | null }> {
     const cart = await this.carts.resolve({ userId, token: cartToken }, false);
     if (!cart) throw AppError.badRequest('Sepetiniz boş.');
 
     const address = body.addressId
       ? await this.addresses.get(userId, body.addressId)
       : { ...body.address!, title: 'Teslimat' };
-    const { commerce } = loadConfig();
+    const { commerce, payment } = loadConfig();
 
     const orderId = await this.db().transaction(async (trx) => {
       const lines = (await this.cartRepo.lines(cart.id, trx)).map(toCartItem);
@@ -90,18 +100,16 @@ export class OrderService {
       if (problems.length) throw AppError.conflict('Sepetinizdeki bazı ürünlerin stoğu yetersiz.', problems);
 
       const totals = calculateTotals(lines, commerce);
-      if (body.installmentCount > totals.maxInstallment) {
-        throw AppError.badRequest(`Bu tutar için en fazla ${totals.maxInstallment} taksit yapılabilir.`);
-      }
-      const payment = this.chargeMock(body.paymentMethod);
+      const isCard = body.paymentMethod === 'card';
 
       const [id] = await trx('orders').insert({
         order_no: generateOrderNo(),
         user_id: userId,
-        status: payment.status,
+        status: 'pending_payment',
         payment_method: body.paymentMethod,
-        payment_status: payment.paymentStatus,
-        installment_count: body.paymentMethod === 'card' ? body.installmentCount : 1,
+        payment_status: 'pending',
+        installment_count: 1,
+        payment_expires_at: isCard ? new Date(Date.now() + payment.pendingOrderTtlMinutes * 60_000) : null,
         subtotal: totals.subtotal,
         shipping_fee: totals.shippingFee,
         total: totals.total,
@@ -127,11 +135,19 @@ export class OrderService {
       for (const l of lines) {
         await trx('product_variants').where('id', l.variantId).decrement('stock', l.quantity);
       }
-      await this.cartRepo.clear(cart.id, trx);
+      if (!isCard) await this.cartRepo.clear(cart.id, trx);
       return id;
     });
 
-    return this.findById(orderId);
+    const paymentStart = body.paymentMethod === 'card' ? await this.payments.initiate(orderId, userIp) : null;
+    return { order: await this.findById(orderId), payment: paymentStart };
+  }
+
+  /** Bekleyen kart siparişi için yeni ödeme denemesi (ör. başarısız ödeme sonrası). */
+  async retryPayment(userId: number, orderNo: string, userIp: string): Promise<PaymentStart> {
+    const order = await this.db()('orders').where({ order_no: orderNo, user_id: userId }).first();
+    if (!order) throw AppError.notFound('Sipariş bulunamadı.');
+    return this.payments.initiate(order.id, userIp);
   }
 
   private async findById(id: number): Promise<OrderDto> {

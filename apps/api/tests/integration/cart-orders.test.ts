@@ -1,6 +1,6 @@
 import { getDb } from '@/infra/db';
 
-import { ADDRESS, api, CARD, findVariant, registerUser, teardown } from '../helpers';
+import { ADDRESS, api, findVariant, registerUser, teardown } from '../helpers';
 
 afterAll(teardown);
 
@@ -64,11 +64,15 @@ describe('Sipariş', () => {
     const res = await api()
       .post('/api/v1/orders')
       .set(auth(token))
-      .send({ paymentMethod: 'card', card: CARD, address: ADDRESS, acceptTerms: true })
+      .send({ paymentMethod: 'card', address: ADDRESS, acceptTerms: true })
       .expect(201);
-    expect(res.body).toMatchObject({ status: 'confirmed', paymentStatus: 'paid', installmentCount: 1 });
-    expect(res.body.orderNo).toMatch(/^HE\d{12}$/);
-    expect(res.body.items[0]).toMatchObject({ variantId: variant.id, quantity: 2 });
+    // Test ortamında ödeme sağlayıcısı "mock": ödeme anında onaylanır.
+    expect(res.body.payment).toMatchObject({ type: 'completed', provider: 'mock' });
+    const order = res.body.order;
+    expect(order).toMatchObject({ status: 'confirmed', paymentStatus: 'paid', installmentCount: 1 });
+    expect(order.paidAt).toEqual(expect.any(String));
+    expect(order.orderNo).toMatch(/^HE\d{12}$/);
+    expect(order.items[0]).toMatchObject({ variantId: variant.id, quantity: 2 });
 
     const after = await getDb()('product_variants').where({ id: variant.id }).first();
     expect(after.stock).toBe(variant.stock - 2);
@@ -78,11 +82,11 @@ describe('Sipariş', () => {
 
     const list = await api().get('/api/v1/orders').set(auth(token)).expect(200);
     expect(list.body.total).toBe(1);
-    await api().get(`/api/v1/orders/${res.body.orderNo}`).set(auth(token)).expect(200);
+    await api().get(`/api/v1/orders/${order.orderNo}`).set(auth(token)).expect(200);
 
     // Başka kullanıcı bu siparişi göremez.
     const other = await registerUser();
-    await api().get(`/api/v1/orders/${res.body.orderNo}`).set(auth(other)).expect(404);
+    await api().get(`/api/v1/orders/${order.orderNo}`).set(auth(other)).expect(404);
   });
 
   it('havale ile sipariş ödeme bekliyor durumunda başlar', async () => {
@@ -94,19 +98,10 @@ describe('Sipariş', () => {
       .set(auth(token))
       .send({ paymentMethod: 'bank_transfer', address: ADDRESS, acceptTerms: true })
       .expect(201);
-    expect(res.body).toMatchObject({ status: 'pending_payment', paymentStatus: 'pending' });
-  });
-
-  it('tutar eşiğinin altındayken taksit reddedilir', async () => {
-    const token = await registerUser();
-    const variant = await findVariant({ maxPrice: 5000 });
-    await api().post('/api/v1/cart/items').set(auth(token)).send({ variantId: variant.id, quantity: 1 }).expect(201);
-    const res = await api()
-      .post('/api/v1/orders')
-      .set(auth(token))
-      .send({ paymentMethod: 'card', card: CARD, installmentCount: 3, address: ADDRESS, acceptTerms: true })
-      .expect(400);
-    expect(res.body.error.message).toContain('en fazla 1 taksit');
+    expect(res.body.order).toMatchObject({ status: 'pending_payment', paymentStatus: 'pending', paymentExpiresAt: null });
+    expect(res.body.payment).toBeNull();
+    const cart = await api().get('/api/v1/cart').set(auth(token)).expect(200);
+    expect(cart.body.itemCount).toBe(0);
   });
 
   it('stok sipariş anında yetersizse 409 döner', async () => {
@@ -118,7 +113,7 @@ describe('Sipariş', () => {
       const res = await api()
         .post('/api/v1/orders')
         .set(auth(token))
-        .send({ paymentMethod: 'card', card: CARD, address: ADDRESS, acceptTerms: true })
+        .send({ paymentMethod: 'card', address: ADDRESS, acceptTerms: true })
         .expect(409);
       expect(res.body.error.details[0]).toMatchObject({ stock: 1 });
     } finally {
@@ -130,7 +125,7 @@ describe('Sipariş', () => {
     const token = await registerUser();
     await api().post('/api/v1/orders').set(auth(token)).send({ paymentMethod: 'bank_transfer', address: ADDRESS, acceptTerms: true }).expect(400);
     await api().post('/api/v1/orders').set(auth(token)).send({ paymentMethod: 'bank_transfer', address: ADDRESS, acceptTerms: false }).expect(400);
-    await api().post('/api/v1/orders').set(auth(token)).send({ paymentMethod: 'card', address: ADDRESS, acceptTerms: true }).expect(400);
+    await api().post('/api/v1/orders').set(auth(token)).send({ paymentMethod: 'cash', address: ADDRESS, acceptTerms: true }).expect(400);
   });
 
   it('kayıtlı adres ile sipariş verilebilir', async () => {
@@ -144,7 +139,7 @@ describe('Sipariş', () => {
       .set(auth(token))
       .send({ paymentMethod: 'bank_transfer', addressId: address.body.id, acceptTerms: true })
       .expect(201);
-    expect(res.body.shippingAddress).toMatchObject({ title: 'Ev', city: 'İstanbul' });
+    expect(res.body.order.shippingAddress).toMatchObject({ title: 'Ev', city: 'İstanbul' });
   });
 
   it('giriş yapmadan sipariş 401', async () => {

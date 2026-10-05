@@ -88,7 +88,7 @@ describe('Yönetim', () => {
       .set(auth(customer))
       .send({ paymentMethod: 'bank_transfer', address: ADDRESS, acceptTerms: true })
       .expect(201);
-    const row = await getDb()('orders').where({ order_no: order.body.orderNo }).first();
+    const row = await getDb()('orders').where({ order_no: order.body.order.orderNo }).first();
 
     await api().patch(`/api/v1/admin/orders/${row.id}/status`).set(auth(admin)).send({ status: 'delivered' }).expect(409);
     const confirmed = await api().patch(`/api/v1/admin/orders/${row.id}/status`).set(auth(admin)).send({ status: 'confirmed' }).expect(200);
@@ -100,6 +100,6 @@ describe('Yönetim', () => {
     expect(restored.stock).toBe(variant.stock);
 
     const list = await api().get('/api/v1/admin/orders').query({ status: 'cancelled' }).set(auth(admin)).expect(200);
-    expect(list.body.items.some((o: { orderNo: string }) => o.orderNo === order.body.orderNo)).toBe(true);
+    expect(list.body.items.some((o: { orderNo: string }) => o.orderNo === order.body.order.orderNo)).toBe(true);
   });
 });

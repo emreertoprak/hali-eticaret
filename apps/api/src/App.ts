@@ -18,6 +18,7 @@ import { cartRouter } from '@/modules/cart/cart.routes';
 import { catalogRouter } from '@/modules/catalog/catalog.routes';
 import { healthRouter } from '@/modules/health/health.routes';
 import { ordersRouter } from '@/modules/orders/orders.routes';
+import { paymentsRouter } from '@/modules/payments/payments.routes';
 import { buildOpenApiDocument } from '@/openapi/registry';
 
 export function createApp(): Express {
@@ -36,6 +37,8 @@ export function createApp(): Express {
   }
 
   const api = express.Router();
+  // Ödeme sağlayıcısı bildirimleri rate limit'e takılmamalı.
+  api.use(paymentsRouter());
   api.use(generalLimiter());
   api.use(healthRouter());
   api.use(catalogRouter());

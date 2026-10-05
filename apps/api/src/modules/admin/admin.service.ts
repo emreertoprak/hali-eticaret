@@ -3,6 +3,7 @@ import type { Knex } from 'knex';
 import { CacheKeys, invalidate } from '@/infra/cache';
 import { getDb } from '@/infra/db';
 import { toOrder } from '@/modules/orders/orders.service';
+import { restoreStock } from '@/modules/orders/stock';
 import { AppError } from '@/utils/AppError';
 import { paginate } from '@/utils/pagination';
 import { slugify } from '@/utils/slugify';
@@ -245,10 +246,7 @@ export class AdminOrderService {
       if (status === 'confirmed' && order.payment_status === 'pending') patch.payment_status = 'paid';
       if (status === 'cancelled') {
         // İptalde stok iade edilir.
-        const items = await trx('order_items').where({ order_id: id }).whereNotNull('variant_id');
-        for (const item of items) {
-          await trx('product_variants').where({ id: item.variant_id }).increment('stock', item.quantity);
-        }
+        await restoreStock(trx, id);
         if (order.payment_status === 'paid') patch.payment_status = 'refunded';
       }
       await trx('orders').where({ id }).update(patch);

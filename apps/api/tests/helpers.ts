@@ -47,7 +47,6 @@ export const ADDRESS = {
   addressLine: 'Caferağa Mah. Moda Cad. No:10 D:3',
 };
 
-export const CARD = { holderName: 'Test Kullanici', number: '4111 1111 1111 1111', expiry: '12/30', cvv: '123' };
 
 export async function teardown(): Promise<void> {
   await getRedis().flushall();
