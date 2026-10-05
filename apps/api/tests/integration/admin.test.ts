@@ -79,6 +79,22 @@ describe('Yönetim', () => {
       .expect(400);
   });
 
+  it('bekleyen kart siparişi elle onaylanamaz, yalnızca iptal edilebilir', async () => {
+    const customer = await registerUser();
+    const variant = await findVariant();
+    await api().post('/api/v1/cart/items').set(auth(customer)).send({ variantId: variant.id, quantity: 1 }).expect(201);
+    const created = await api().post('/api/v1/orders').set(auth(customer)).send({ paymentMethod: 'card', address: ADDRESS, acceptTerms: true }).expect(201);
+    // mock sağlayıcı anında onaylar; bekleyen kart siparişi senaryosu için durumu geri al
+    const row = await getDb()('orders').where({ order_no: created.body.order.orderNo }).first();
+    await getDb()('orders').where({ id: row.id }).update({ status: 'pending_payment', payment_status: 'pending', paid_at: null });
+
+    const detail = await api().get(`/api/v1/admin/orders/${row.id}`).set(auth(admin)).expect(200);
+    expect(detail.body.allowedTransitions).toEqual(['cancelled']);
+    await api().patch(`/api/v1/admin/orders/${row.id}/status`).set(auth(admin)).send({ status: 'confirmed' }).expect(409);
+    const cancelled = await api().patch(`/api/v1/admin/orders/${row.id}/status`).set(auth(admin)).send({ status: 'cancelled' }).expect(200);
+    expect(cancelled.body.paymentStatus).toBe('failed');
+  });
+
   it('sipariş durum geçişleri ve iptalde stok iadesi', async () => {
     const customer = await registerUser();
     const variant = await findVariant({ minStock: 3 });
@@ -95,7 +111,11 @@ describe('Yönetim', () => {
     expect(confirmed.body.paymentStatus).toBe('paid');
 
     const cancelled = await api().patch(`/api/v1/admin/orders/${row.id}/status`).set(auth(admin)).send({ status: 'cancelled' }).expect(200);
-    expect(cancelled.body).toMatchObject({ status: 'cancelled', paymentStatus: 'refunded' });
+    // Para henüz iade edilmedi: yönetici sağlayıcıda iadeyi yapıp işaretler.
+    expect(cancelled.body).toMatchObject({ status: 'cancelled', paymentStatus: 'refund_pending', allowedTransitions: [] });
+    const refunded = await api().post(`/api/v1/admin/orders/${row.id}/refunded`).set(auth(admin)).expect(200);
+    expect(refunded.body.paymentStatus).toBe('refunded');
+    await api().post(`/api/v1/admin/orders/${row.id}/refunded`).set(auth(admin)).expect(409);
     const restored = await getDb()('product_variants').where({ id: variant.id }).first();
     expect(restored.stock).toBe(variant.stock);
 

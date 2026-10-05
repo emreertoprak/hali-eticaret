@@ -6,10 +6,9 @@ import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
 import { type AdminProduct, type AdminProductResponse, type AdminRecord, type AdminVariant, fieldErrors } from '@/lib/admin';
-import { ApiError } from '@/lib/api';
 
 import { ImageUploader } from './ImageUploader';
-import { Card, Field, Notice, Toggle, useAdminData } from './ui';
+import { Card, errorText, Field, isValidationError, Notice, Toggle, useAdminData } from './ui';
 
 const EMPTY_VARIANT: AdminVariant = { sku: '', widthCm: 160, lengthCm: 230, price: 0, discountPrice: null, stock: 0, isActive: true };
 
@@ -76,7 +75,15 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
 
   const set = <K extends keyof AdminProduct>(key: K, value: AdminProduct[K]) => setP((prev) => ({ ...prev, [key]: value }));
   const setVariant = (i: number, patch: Partial<AdminVariant>) =>
-    setP((prev) => ({ ...prev, variants: prev.variants.map((v, j) => (j === i ? { ...v, ...patch } : v)) }));
+    setP((prev) => ({
+      ...prev,
+      variants: prev.variants.map((v, j) => {
+        if (j !== i) return v;
+        // Ölçü değişirse kayıtlı (özel olabilecek) etiket yeniden üretilir; aksi halde korunur.
+        const resized = ('widthCm' in patch && patch.widthCm !== v.widthCm) || ('lengthCm' in patch && patch.lengthCm !== v.lengthCm);
+        return { ...v, ...patch, ...(resized ? { sizeLabel: undefined } : {}) };
+      }),
+    }));
 
   const save = async () => {
     setSaving(true);
@@ -101,7 +108,7 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
         sku: v.sku.trim() || `${p.skuBase.trim()}-${v.widthCm}${v.lengthCm}`,
         widthCm: Number(v.widthCm),
         lengthCm: Number(v.lengthCm),
-        sizeLabel: `${v.widthCm}x${v.lengthCm}`,
+        sizeLabel: v.sizeLabel || `${v.widthCm}x${v.lengthCm}`,
         price: Number(v.price),
         discountPrice: v.discountPrice ? Number(v.discountPrice) : null,
         stock: Number(v.stock),
@@ -121,9 +128,12 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
       setP(toFormProduct(saved));
       setMessage({ kind: 'success', text: 'Ürün kaydedildi.' });
     } catch (err) {
-      if (err instanceof ApiError) {
-        setErrors(fieldErrors(err.details));
-        setMessage({ kind: 'error', text: err.message === 'Geçersiz istek.' ? 'Lütfen işaretli alanları kontrol edin.' : err.message });
+      if (isValidationError(err)) {
+        const fe = fieldErrors(err.details);
+        setErrors(fe);
+        setMessage({ kind: 'error', text: `Lütfen işaretli alanları kontrol edin (${Object.keys(fe).length} alan).` });
+      } else {
+        setMessage({ kind: 'error', text: errorText(err, 'Ürün kaydedilemedi.') });
       }
     } finally {
       setSaving(false);
@@ -132,9 +142,13 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
 
   const deactivate = async () => {
     if (!p.id || !window.confirm('Ürün pasife alınacak ve vitrinden kaldırılacak. Devam edilsin mi?')) return;
-    await authFetch(`/admin/products/${p.id}`, { method: 'DELETE' });
-    setP((prev) => ({ ...prev, isActive: false }));
-    setMessage({ kind: 'success', text: 'Ürün pasife alındı.' });
+    try {
+      await authFetch(`/admin/products/${p.id}`, { method: 'DELETE' });
+      setP((prev) => ({ ...prev, isActive: false }));
+      setMessage({ kind: 'success', text: 'Ürün pasife alındı.' });
+    } catch (err) {
+      setMessage({ kind: 'error', text: errorText(err, 'Ürün pasife alınamadı; vitrinde hâlâ görünüyor.') });
+    }
   };
 
   return (
@@ -172,29 +186,35 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
                   ))}
                 </select>
               </Field>
-              <Field label="Malzeme">
+              <Field label="Malzeme" error={errors.material}>
                 <input className="input" value={p.material ?? ''} onChange={(e) => set('material', e.target.value)} />
               </Field>
-              <Field label="Hav yüksekliği">
+              <Field label="Hav yüksekliği" error={errors.pileHeight}>
                 <input className="input" value={p.pileHeight ?? ''} onChange={(e) => set('pileHeight', e.target.value)} placeholder="ör. 9 mm" />
               </Field>
-              <Field label="Renk">
+              <Field label="Renk" error={errors.color}>
                 <input className="input" value={p.color ?? ''} onChange={(e) => set('color', e.target.value)} />
               </Field>
-              <Field label="Üretim yeri">
+              <Field label="Üretim yeri" error={errors.origin}>
                 <input className="input" value={p.origin ?? ''} onChange={(e) => set('origin', e.target.value)} />
               </Field>
-              <Field label="Açıklama" className="sm:col-span-2">
+              <Field label="Açıklama" error={errors.description} className="sm:col-span-2">
                 <textarea className="input" rows={5} value={p.description ?? ''} onChange={(e) => set('description', e.target.value)} />
               </Field>
-              <Field label="Bakım talimatı" className="sm:col-span-2">
+              <Field label="Bakım talimatı" error={errors.care} className="sm:col-span-2">
                 <textarea className="input" rows={2} value={p.care ?? ''} onChange={(e) => set('care', e.target.value)} />
               </Field>
             </div>
           </Card>
 
           <Card title="Görseller">
-            <ImageUploader value={p.images.map((i) => i.url)} onChange={(urls) => set('images', urls.map((url) => ({ url, alt: p.images.find((i) => i.url === url)?.alt ?? null })))} />
+            <ImageUploader
+              value={p.images.map((i) => i.url)}
+              onChange={(urls) =>
+                setP((prev) => ({ ...prev, images: urls.map((url) => ({ url, alt: prev.images.find((i) => i.url === url)?.alt ?? null })) }))
+              }
+            />
+            {errors.images && <p className="mt-2 text-[13px] font-semibold text-brand-red">{errors.images}</p>}
           </Card>
 
           <Card
@@ -274,6 +294,7 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
             <div className="space-y-3">
               <Toggle label="Vitrinde aktif" checked={p.isActive} onChange={(v) => set('isActive', v)} />
               <Toggle label="Öne çıkan ürün" checked={p.isFeatured} onChange={(v) => set('isFeatured', v)} />
+              {errors.slug && <p className="text-[13px] font-semibold text-brand-red">URL: {errors.slug}</p>}
             </div>
             <button className="btn-primary mt-5 w-full" disabled={saving}>
               {saving ? 'Kaydediliyor…' : 'Kaydet'}
@@ -290,6 +311,7 @@ export function ProductForm({ initial }: { initial: AdminProduct }) {
             )}
           </Card>
           <Card title="Koleksiyonlar">
+            {errors.collectionIds && <p className="mb-2 text-[13px] font-semibold text-brand-red">{errors.collectionIds}</p>}
             <ul className="space-y-2">
               {collections?.map((c) => (
                 <li key={c.id}>

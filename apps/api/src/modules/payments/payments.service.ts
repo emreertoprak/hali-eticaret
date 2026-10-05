@@ -148,8 +148,10 @@ export class PaymentService {
         });
       } else {
         // Ör. süre aşımıyla iptal edildikten sonra gelen başarılı ödeme: manuel iade gerekir.
-        logger.error(`Sipariş ${order.order_no} "${order.status}" durumundayken ödeme alındı; manuel kontrol/iade gerekli.`);
-        await trx('orders').where({ id: order.id }).update({ payment_status: 'paid', paid_at: trx.fn.now(), updated_at: trx.fn.now() });
+        logger.error(`Sipariş ${order.order_no} "${order.status}" durumundayken ödeme alındı; iade gerekli.`);
+        await trx('orders')
+          .where({ id: order.id })
+          .update({ payment_status: order.status === 'cancelled' ? 'refund_pending' : 'paid', paid_at: trx.fn.now(), updated_at: trx.fn.now() });
       }
 
       // Satın alınan ebatları kullanıcının sepetinden düş.

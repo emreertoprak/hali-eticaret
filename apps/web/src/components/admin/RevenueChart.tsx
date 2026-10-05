@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { formatPrice } from '@/lib/format';
 
@@ -21,16 +21,18 @@ const compact = new Intl.NumberFormat('tr-TR', { notation: 'compact', maximumFra
 const dayLabel = (iso: string) => new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'short' }).format(new Date(`${iso}T12:00:00`));
 
 export function RevenueChart({ series }: { series: { day: string; revenue: number; orders: number }[] }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const observer = useRef<ResizeObserver | null>(null);
   const [width, setWidth] = useState(720);
   const [hover, setHover] = useState<number | null>(null);
   const [showTable, setShowTable] = useState(false);
 
-  useEffect(() => {
-    if (!ref.current) return;
-    const ro = new ResizeObserver(([entry]) => setWidth(Math.max(320, entry.contentRect.width)));
-    ro.observe(ref.current);
-    return () => ro.disconnect();
+  // Callback ref: tablo görünümünden dönüldüğünde yeniden bağlanan kapsayıcıyı da izler.
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    observer.current?.disconnect();
+    observer.current = null;
+    if (!node) return;
+    observer.current = new ResizeObserver(([entry]) => setWidth(Math.max(200, Math.floor(entry.contentRect.width))));
+    observer.current.observe(node);
   }, []);
 
   const max = niceMax(Math.max(...series.map((s) => s.revenue)));

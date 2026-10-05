@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
 import { ApiError } from '@/lib/api';
@@ -141,6 +141,15 @@ export function ActiveBadge({ active }: { active: boolean }) {
   );
 }
 
+/** API hatasını kullanıcıya gösterilecek metne çevirir; ağ hataları dahil hiçbir hata sessiz kalmaz. */
+export function errorText(err: unknown, fallback = 'İşlem başarısız oldu.'): string {
+  if (err instanceof ApiError) return err.message;
+  if (err instanceof TypeError) return 'Sunucuya ulaşılamadı. Bağlantınızı kontrol edip tekrar deneyin.';
+  return fallback;
+}
+
+export const isValidationError = (err: unknown): err is ApiError => err instanceof ApiError && err.code === 'VALIDATION_ERROR';
+
 /** Admin API'den veri yükler; yeniden yükleme ve hata durumunu yönetir. */
 export function useAdminData<T>(path: string | null) {
   const { authFetch } = useAuth();
@@ -148,16 +157,23 @@ export function useAdminData<T>(path: string | null) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const latest = useRef(0);
+
+  // Hızlı filtre/sayfa değişimlerinde geç dönen eski yanıt yeni veriyi ezmesin: yalnızca son istek yazar.
   const reload = useCallback(async () => {
     if (!path) return;
+    const requestId = ++latest.current;
     setLoading(true);
     try {
-      setData(await authFetch<T>(path));
+      const next = await authFetch<T>(path);
+      if (requestId !== latest.current) return;
+      setData(next);
       setError(null);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Veri yüklenemedi.');
+      if (requestId !== latest.current) return;
+      setError(errorText(err, 'Veri yüklenemedi.'));
     } finally {
-      setLoading(false);
+      if (requestId === latest.current) setLoading(false);
     }
   }, [authFetch, path]);
 

@@ -1,10 +1,12 @@
 'use client';
 
 import { ArrowLeft, ArrowRight, ImagePlus, Loader2, Trash2 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
-import { ApiError } from '@/lib/api';
+
+import { errorText } from './ui';
+
 
 interface UploadResult {
   files: { url: string }[];
@@ -17,9 +19,14 @@ export function ImageUploader({ value, onChange, multiple = true, label = 'Görs
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [drag, setDrag] = useState(false);
+  // Yükleme bitince, yükleme sırasında yapılan silme/sıralama değişikliklerini korumak için güncel değer.
+  const latestValue = useRef(value);
+  useEffect(() => {
+    latestValue.current = value;
+  }, [value]);
 
   const upload = async (list: FileList | null) => {
-    if (!list?.length) return;
+    if (!list?.length || busy) return;
     const form = new FormData();
     Array.from(list)
       .slice(0, multiple ? 10 : 1)
@@ -29,9 +36,9 @@ export function ImageUploader({ value, onChange, multiple = true, label = 'Görs
     try {
       const res = await authFetch<UploadResult>('/admin/uploads', { method: 'POST', body: form });
       const urls = res.files.map((f) => f.url);
-      onChange(multiple ? [...value, ...urls] : urls.slice(0, 1));
+      onChange(multiple ? [...latestValue.current, ...urls] : urls.slice(0, 1));
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Yükleme başarısız.');
+      setError(errorText(err, 'Yükleme başarısız.'));
     } finally {
       setBusy(false);
       if (inputRef.current) inputRef.current.value = '';
@@ -70,6 +77,8 @@ export function ImageUploader({ value, onChange, multiple = true, label = 'Görs
         {(multiple || value.length === 0) && (
           <button
             type="button"
+            disabled={busy}
+            aria-busy={busy}
             onClick={() => inputRef.current?.click()}
             onDragOver={(e) => {
               e.preventDefault();
@@ -79,7 +88,7 @@ export function ImageUploader({ value, onChange, multiple = true, label = 'Görs
             onDrop={(e) => {
               e.preventDefault();
               setDrag(false);
-              void upload(e.dataTransfer.files);
+              if (!busy) void upload(e.dataTransfer.files);
             }}
             className={`grid size-28 place-items-center rounded-lg border-2 border-dashed text-center text-[12px] font-semibold text-muted transition ${drag ? 'border-ink bg-cream' : 'border-line hover:border-ink'}`}
           >

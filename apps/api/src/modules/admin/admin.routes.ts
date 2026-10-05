@@ -122,5 +122,12 @@ export function adminRouter(
     asyncHandler(async (req, res) => res.json(await orders.updateStatus(id(req), req.body))),
   );
 
+  doc('post', '/admin/orders/:id/refunded', { tags, summary: 'İadeyi tamamlandı olarak işaretle', auth: true, params: idParams });
+  router.post(
+    '/orders/:id/refunded',
+    validate({ params: idParams }),
+    asyncHandler(async (req, res) => res.json(await orders.markRefunded(id(req)))),
+  );
+
   return router;
 }

@@ -161,7 +161,7 @@ export interface Order {
   orderNo: string;
   status: OrderStatus;
   paymentMethod: 'card' | 'bank_transfer';
-  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refund_pending' | 'refunded';
   installmentCount: number;
   subtotal: number;
   shippingFee: number;

@@ -26,7 +26,7 @@ export function camelKeys(obj: Record<string, unknown>): Record<string, unknown>
 }
 
 /** Sipariş durum makinesi; UI izinli geçişleri sipariş detayından (allowedTransitions) okur. */
-export const TRANSITIONS: Record<string, string[]> = {
+const TRANSITIONS: Record<string, string[]> = {
   pending_payment: ['confirmed', 'cancelled'],
   confirmed: ['preparing', 'cancelled'],
   preparing: ['shipped', 'cancelled'],
@@ -34,6 +34,16 @@ export const TRANSITIONS: Record<string, string[]> = {
   delivered: [],
   cancelled: [],
 };
+
+/**
+ * Siparişin izinli durum geçişleri. Kartla ödenecek siparişler yalnızca ödeme sağlayıcısının
+ * bildirimiyle onaylanır; yönetici bekleyen kart siparişini elle "onaylayamaz", yalnızca iptal edebilir.
+ */
+export function allowedTransitions(order: { status: string; payment_method: string }): string[] {
+  const next = TRANSITIONS[order.status] ?? [];
+  if (order.status === 'pending_payment' && order.payment_method === 'card') return next.filter((s) => s !== 'confirmed');
+  return next;
+}
 
 /** Basit içerik tabloları (kategori, koleksiyon, banner, duyuru) için CRUD. */
 export class SimpleCrud {
@@ -308,7 +318,7 @@ export class AdminOrderService {
         createdAt: new Date(p.created_at).toISOString(),
         updatedAt: new Date(p.updated_at).toISOString(),
       })),
-      allowedTransitions: TRANSITIONS[order.status] ?? [],
+      allowedTransitions: allowedTransitions(order),
     };
   }
 
@@ -317,7 +327,7 @@ export class AdminOrderService {
     await this.db().transaction(async (trx) => {
       const order = await trx('orders').where({ id }).forUpdate().first();
       if (!order) throw AppError.notFound('Sipariş bulunamadı.');
-      if (!TRANSITIONS[order.status]?.includes(status)) {
+      if (!allowedTransitions(order).includes(status)) {
         throw AppError.conflict(`Sipariş durumu "${order.status}" → "${status}" olarak değiştirilemez.`);
       }
       const patch: Record<string, unknown> = { status, updated_at: trx.fn.now() };
@@ -331,12 +341,21 @@ export class AdminOrderService {
       if (status === 'cancelled') {
         // İptalde stok iade edilir.
         await restoreStock(trx, id);
-        if (order.payment_status === 'paid') patch.payment_status = 'refunded';
-        else patch.payment_status = 'failed';
+        // Ödenmiş siparişte para henüz iade edilmedi: yönetici sağlayıcıda iadeyi yapıp işaretler.
+        patch.payment_status = order.payment_status === 'paid' ? 'refund_pending' : 'failed';
         await trx('payments').where({ order_id: id, status: 'initiated' }).update({ status: 'failed', failed_reason_msg: 'Sipariş iptal edildi', updated_at: trx.fn.now() });
       }
       await trx('orders').where({ id }).update(patch);
     });
+    return this.get(id);
+  }
+
+  /** Ödeme sağlayıcısı panelinden iade yapıldıktan sonra siparişi "iade edildi" olarak işaretler. */
+  async markRefunded(id: number) {
+    const updated = await this.db()('orders')
+      .where({ id, status: 'cancelled', payment_status: 'refund_pending' })
+      .update({ payment_status: 'refunded', updated_at: this.db().fn.now() });
+    if (!updated) throw AppError.conflict('Yalnızca iade bekleyen iptal edilmiş siparişler işaretlenebilir.');
     return this.get(id);
   }
 }

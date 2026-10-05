@@ -6,14 +6,13 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
-import { Card, Field, Notice, PageHeader, useAdminData } from '@/components/admin/ui';
+import { Card, errorText, Field, isValidationError, Notice, PageHeader, useAdminData } from '@/components/admin/ui';
 import { OrderStatusBadge } from '@/components/ui/OrderCard';
 import { useAuth } from '@/context/AuthContext';
 import { ADMIN_STATUS_ACTIONS, type AdminOrderDetail, fieldErrors } from '@/lib/admin';
-import { ApiError } from '@/lib/api';
 import { formatDate, formatPrice } from '@/lib/format';
 
-const PAYMENT_STATUS: Record<string, string> = { pending: 'Bekliyor', paid: 'Ödendi', failed: 'Başarısız', refunded: 'İade edildi' };
+const PAYMENT_STATUS: Record<string, string> = { pending: 'Bekliyor', paid: 'Ödendi', failed: 'Başarısız', refund_pending: 'İade bekliyor', refunded: 'İade edildi' };
 const ATTEMPT_STATUS: Record<string, string> = { initiated: 'Başlatıldı', succeeded: 'Başarılı', failed: 'Başarısız' };
 const CARRIERS = ['Yurtiçi Kargo', 'Aras Kargo', 'MNG Kargo', 'Sürat Kargo', 'PTT Kargo', 'UPS', 'Kendi aracımız'];
 
@@ -38,10 +37,22 @@ export default function AdminOrderDetailPage() {
       setData(next);
       setMessage({ kind: 'success', text: 'Sipariş durumu güncellendi.' });
     } catch (err) {
-      if (err instanceof ApiError) {
-        setErrors(fieldErrors(err.details));
-        setMessage({ kind: 'error', text: err.message });
-      }
+      if (isValidationError(err)) setErrors(fieldErrors(err.details));
+      setMessage({ kind: 'error', text: errorText(err, 'Sipariş güncellenemedi.') });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const markRefunded = async () => {
+    if (!window.confirm('İadeyi ödeme sağlayıcısı panelinden yaptığınızı onaylıyor musunuz?')) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      setData(await authFetch<AdminOrderDetail>(`/admin/orders/${id}/refunded`, { method: 'POST' }));
+      setMessage({ kind: 'success', text: 'Sipariş "iade edildi" olarak işaretlendi.' });
+    } catch (err) {
+      setMessage({ kind: 'error', text: errorText(err, 'İşaretlenemedi.') });
     } finally {
       setBusy(false);
     }
@@ -208,8 +219,15 @@ export default function AdminOrderDetailPage() {
                 </div>
               )}
             </dl>
-            {order.status === 'cancelled' && order.paymentStatus === 'paid' && (
-              <p className="mt-3 rounded-lg bg-brand-red/10 px-3 py-2 text-[13px] font-semibold text-brand-red-deep">İptal edilmiş siparişte ödeme alınmış — PayTR panelinden iade gerekli.</p>
+            {order.paymentStatus === 'refund_pending' && (
+              <div className="mt-3 rounded-lg bg-brand-red/10 p-3 text-[13px] text-brand-red-deep">
+                <p className="font-semibold">
+                  İptal edilen siparişin ödemesi alınmış. {order.paymentMethod === 'card' ? 'PayTR mağaza panelinden' : 'Müşterinin hesabına'} {formatPrice(order.total)} iade yapın.
+                </p>
+                <button className="btn-heritage mt-2 px-4! py-1.5! text-[13px]" disabled={busy} onClick={() => void markRefunded()}>
+                  İade yapıldı olarak işaretle
+                </button>
+              </div>
             )}
           </Card>
         </div>

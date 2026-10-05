@@ -43,7 +43,7 @@ export const orderSchema = z
     orderNo: z.string(),
     status: z.enum(ORDER_STATUSES),
     paymentMethod: z.enum(['card', 'bank_transfer']),
-    paymentStatus: z.enum(['pending', 'paid', 'failed', 'refunded']),
+    paymentStatus: z.enum(['pending', 'paid', 'failed', 'refund_pending', 'refunded']),
     installmentCount: z.number(),
     subtotal: z.number(),
     shippingFee: z.number(),

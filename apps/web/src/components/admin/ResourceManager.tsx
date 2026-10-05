@@ -5,10 +5,9 @@ import { useState } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
 import { type AdminRecord, fieldErrors } from '@/lib/admin';
-import { ApiError } from '@/lib/api';
 
 import { ImageUploader } from './ImageUploader';
-import { ActiveBadge, DataTable, Field, Notice, PageHeader, Toggle, useAdminData } from './ui';
+import { ActiveBadge, DataTable, errorText, Field, isValidationError, Notice, PageHeader, Toggle, useAdminData } from './ui';
 
 export type FieldDef =
   | { name: string; label: string; type: 'text' | 'textarea' | 'url'; required?: boolean; hint?: string; nullable?: boolean }
@@ -74,10 +73,8 @@ export function ResourceManager({ config }: { config: ResourceConfig }) {
       setMessage({ kind: 'success', text: `${config.singular} kaydedildi.` });
       await reload();
     } catch (err) {
-      if (err instanceof ApiError) {
-        setErrors(fieldErrors(err.details));
-        if (!Object.keys(fieldErrors(err.details)).length) setErrors({ _form: err.message });
-      }
+      const fe = isValidationError(err) ? fieldErrors(err.details) : {};
+      setErrors(Object.keys(fe).length ? fe : { _form: errorText(err, `${config.singular} kaydedilemedi.`) });
     } finally {
       setSaving(false);
     }
@@ -90,7 +87,7 @@ export function ResourceManager({ config }: { config: ResourceConfig }) {
       setMessage({ kind: 'success', text: `${config.singular} silindi.` });
       await reload();
     } catch (err) {
-      setMessage({ kind: 'error', text: err instanceof ApiError ? err.message : 'Silinemedi.' });
+      setMessage({ kind: 'error', text: errorText(err, 'Silinemedi.') });
     }
   };
 
