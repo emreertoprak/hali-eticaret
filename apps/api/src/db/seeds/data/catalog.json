@@ -1,0 +1,3389 @@
+{
+ "categories": [
+  {
+   "name": "Afgan Halı",
+   "slug": "afgan-hali",
+   "description": "El dokuması Afgan halıları, doğal yün ve bitkisel boyalarla.",
+   "style": "medallion",
+   "material": "Yün",
+   "origin": "Afganistan",
+   "pileHeight": "8 mm",
+   "sortOrder": 1
+  },
+  {
+   "name": "Akrilik Halı",
+   "slug": "akrilik-hali",
+   "description": "Yumuşak dokulu, canlı renkli akrilik halılar.",
+   "style": "modern",
+   "material": "Akrilik",
+   "origin": "Türkiye",
+   "pileHeight": "12 mm",
+   "sortOrder": 2
+  },
+  {
+   "name": "Asimetrik Halı",
+   "slug": "asimetrik-hali",
+   "description": "Kesimli, asimetrik formlu modern halılar.",
+   "style": "abstract",
+   "material": "Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "10 mm",
+   "sortOrder": 3
+  },
+  {
+   "name": "Asitane Serisi",
+   "slug": "asitane-serisi",
+   "description": "Saray motiflerinden ilham alan Asitane serisi.",
+   "style": "medallion",
+   "material": "Bambu & Viskon",
+   "origin": "Türkiye",
+   "pileHeight": "6 mm",
+   "sortOrder": 4
+  },
+  {
+   "name": "Banyo Paspası",
+   "slug": "banyo-paspasi",
+   "description": "Kaymaz tabanlı, hızlı kuruyan banyo paspasları.",
+   "style": "solid",
+   "material": "Pamuk",
+   "origin": "Türkiye",
+   "pileHeight": "15 mm",
+   "sortOrder": 5
+  },
+  {
+   "name": "Bohem Halı",
+   "slug": "bohem-hali",
+   "description": "Etnik ve bohem desenli, hafif dokulu halılar.",
+   "style": "kilim",
+   "material": "Pamuk & Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "5 mm",
+   "sortOrder": 6
+  },
+  {
+   "name": "Bukle Halı",
+   "slug": "bukle-hali",
+   "description": "Halka (bukle) dokulu, dayanıklı halılar.",
+   "style": "loop",
+   "material": "Polipropilen",
+   "origin": "Türkiye",
+   "pileHeight": "8 mm",
+   "sortOrder": 7
+  },
+  {
+   "name": "Düz Renk Halı",
+   "slug": "duz-renk-hali",
+   "description": "Minimal düz renk halılar, her dekora uyum sağlar.",
+   "style": "solid",
+   "material": "Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "10 mm",
+   "sortOrder": 8
+  },
+  {
+   "name": "Göbekli Halı",
+   "slug": "gobekli-hali",
+   "description": "Merkez göbek motifli klasik halılar.",
+   "style": "medallion",
+   "material": "Polipropilen",
+   "origin": "Türkiye",
+   "pileHeight": "9 mm",
+   "sortOrder": 9
+  },
+  {
+   "name": "Jüt Hasır Halı",
+   "slug": "jut-hasir-hali",
+   "description": "Doğal jüt ve hasır dokulu, nefes alan halılar.",
+   "style": "jute",
+   "material": "Jüt",
+   "origin": "Hindistan",
+   "pileHeight": "4 mm",
+   "sortOrder": 10
+  },
+  {
+   "name": "Kilimler",
+   "slug": "kilimler",
+   "description": "Geleneksel Anadolu motifli kilimler.",
+   "style": "kilim",
+   "material": "Yün",
+   "origin": "Türkiye",
+   "pileHeight": "3 mm",
+   "sortOrder": 11
+  },
+  {
+   "name": "Klasik Halı",
+   "slug": "klasik-hali",
+   "description": "Zamansız klasik desenler.",
+   "style": "medallion",
+   "material": "Polipropilen",
+   "origin": "Türkiye",
+   "pileHeight": "9 mm",
+   "sortOrder": 12
+  },
+  {
+   "name": "Limitli Seri Halılar",
+   "slug": "limitli-seri-halilar",
+   "description": "Sınırlı sayıda üretilen tasarım halılar.",
+   "style": "abstract",
+   "material": "Yün & İpek",
+   "origin": "Türkiye",
+   "pileHeight": "7 mm",
+   "sortOrder": 13
+  },
+  {
+   "name": "Microfiber Halı",
+   "slug": "microfiber-hali",
+   "description": "Leke tutmayan, kolay temizlenen microfiber halılar.",
+   "style": "solid",
+   "material": "Microfiber",
+   "origin": "Türkiye",
+   "pileHeight": "8 mm",
+   "sortOrder": 14
+  },
+  {
+   "name": "Peluş Halı",
+   "slug": "pelus-hali",
+   "description": "Kadife dokulu, yumuşacık peluş halılar.",
+   "style": "shaggy",
+   "material": "Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "20 mm",
+   "sortOrder": 15
+  },
+  {
+   "name": "Seri Sonu Fırsatı",
+   "slug": "seri-sonu-firsati",
+   "description": "Seri sonu ürünlerde kaçırılmayacak fiyatlar.",
+   "style": "modern",
+   "material": "Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "9 mm",
+   "sortOrder": 16
+  },
+  {
+   "name": "Shaggy Halı",
+   "slug": "shaggy-hali",
+   "description": "Uzun tüylü, sıcak shaggy halılar.",
+   "style": "shaggy",
+   "material": "Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "45 mm",
+   "sortOrder": 17
+  },
+  {
+   "name": "Sisal Halı",
+   "slug": "sisal-hali",
+   "description": "Doğal görünümlü sisal dokulu halılar.",
+   "style": "jute",
+   "material": "Sisal",
+   "origin": "Brezilya",
+   "pileHeight": "4 mm",
+   "sortOrder": 18
+  },
+  {
+   "name": "Soyut Abstract",
+   "slug": "soyut-abstract",
+   "description": "Sanatsal soyut desenli halılar.",
+   "style": "abstract",
+   "material": "Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "9 mm",
+   "sortOrder": 19
+  },
+  {
+   "name": "Vintage Halı",
+   "slug": "vintage-hali",
+   "description": "Eskitme efektli vintage halılar.",
+   "style": "vintage",
+   "material": "Pamuk Taban & Polyester",
+   "origin": "Türkiye",
+   "pileHeight": "6 mm",
+   "sortOrder": 20
+  }
+ ],
+ "collections": [
+  {
+   "name": "Hand-Woven Collection",
+   "slug": "hand-woven",
+   "description": "Usta ellerden çıkan el dokuması halılar.",
+   "featured": true,
+   "imageUrl": "/images/collections/hand-woven.svg",
+   "bannerUrl": "/images/banners/hand-woven.svg"
+  },
+  {
+   "name": "Vintage Ruhu",
+   "slug": "vintage-ruhu",
+   "description": "Eskitme dokular, zamansız renkler.",
+   "featured": true,
+   "imageUrl": "/images/collections/vintage-ruhu.svg",
+   "bannerUrl": "/images/banners/vintage-ruhu.svg"
+  },
+  {
+   "name": "Modern Yaşam",
+   "slug": "modern-yasam",
+   "description": "Minimal ve çağdaş mekânlar için.",
+   "featured": true,
+   "imageUrl": "/images/collections/modern-yasam.svg",
+   "bannerUrl": "/images/banners/modern-yasam.svg"
+  },
+  {
+   "name": "Doğal Dokular",
+   "slug": "dogal-dokular",
+   "description": "Jüt, sisal ve doğal lifler.",
+   "featured": false,
+   "imageUrl": "/images/collections/dogal-dokular.svg",
+   "bannerUrl": "/images/banners/dogal-dokular.svg"
+  }
+ ],
+ "products": [
+  {
+   "name": "Nova Afgan Halı - Hardal 1001",
+   "slug": "nova-afgan-hali-hardal-1001",
+   "skuBase": "HE-1001",
+   "category": "afgan-hali",
+   "style": "medallion",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": false,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1001-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 2619.9,
+     "discountPrice": null,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1001-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 5319.9,
+     "discountPrice": null,
+     "stock": 6
+    },
+    {
+     "sku": "HE-1001-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 6089.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1001-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 8219.9,
+     "discountPrice": null,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1001-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 13429.9,
+     "discountPrice": null,
+     "stock": 8
+    },
+    {
+     "sku": "HE-1001-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 6049.9,
+     "discountPrice": null,
+     "stock": 23
+    }
+   ],
+   "images": [
+    "/images/rugs/nova-afgan-hali-hardal-1001-1.svg",
+    "/images/rugs/nova-afgan-hali-hardal-1001-2.svg"
+   ],
+   "createdDaysAgo": 114
+  },
+  {
+   "name": "Lalezar Afgan Halı - Mavi 1002",
+   "slug": "lalezar-afgan-hali-mavi-1002",
+   "skuBase": "HE-1002",
+   "category": "afgan-hali",
+   "style": "medallion",
+   "color": "Mavi",
+   "hex": "#3b6e8f",
+   "featured": false,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1002-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 5459.9,
+     "discountPrice": 3819.9,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1002-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 5059.9,
+     "discountPrice": 3539.9,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1002-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 9539.9,
+     "discountPrice": 6679.9,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1002-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 16599.9,
+     "discountPrice": 11619.9,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1002-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 6259.9,
+     "discountPrice": 4379.9,
+     "stock": 2
+    }
+   ],
+   "images": [
+    "/images/rugs/lalezar-afgan-hali-mavi-1002-1.svg",
+    "/images/rugs/lalezar-afgan-hali-mavi-1002-2.svg"
+   ],
+   "createdDaysAgo": 49
+  },
+  {
+   "name": "Efes Afgan Halı - Lacivert 1003",
+   "slug": "efes-afgan-hali-lacivert-1003",
+   "skuBase": "HE-1003",
+   "category": "afgan-hali",
+   "style": "medallion",
+   "color": "Lacivert",
+   "hex": "#1f2f55",
+   "featured": false,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1003-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 3439.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1003-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 9559.9,
+     "discountPrice": null,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1003-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 15379.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1003-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 6709.9,
+     "discountPrice": null,
+     "stock": 3
+    }
+   ],
+   "images": [
+    "/images/rugs/efes-afgan-hali-lacivert-1003-1.svg",
+    "/images/rugs/efes-afgan-hali-lacivert-1003-2.svg"
+   ],
+   "createdDaysAgo": 20
+  },
+  {
+   "name": "Kapadokya Akrilik Halı - Mor 1004",
+   "slug": "kapadokya-akrilik-hali-mor-1004",
+   "skuBase": "HE-1004",
+   "category": "akrilik-hali",
+   "style": "modern",
+   "color": "Mor",
+   "hex": "#6b3f73",
+   "featured": true,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1004-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1019.9,
+     "discountPrice": null,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1004-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1939.9,
+     "discountPrice": null,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1004-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2069.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1004-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3299.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1004-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5249.9,
+     "discountPrice": null,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1004-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2119.9,
+     "discountPrice": null,
+     "stock": 24
+    }
+   ],
+   "images": [
+    "/images/rugs/kapadokya-akrilik-hali-mor-1004-1.svg",
+    "/images/rugs/kapadokya-akrilik-hali-mor-1004-2.svg"
+   ],
+   "createdDaysAgo": 75
+  },
+  {
+   "name": "Sultan Akrilik Halı - Pembe 1005",
+   "slug": "sultan-akrilik-hali-pembe-1005",
+   "skuBase": "HE-1005",
+   "category": "akrilik-hali",
+   "style": "modern",
+   "color": "Pembe",
+   "hex": "#c46a86",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1005-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 999.9,
+     "discountPrice": null,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1005-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1749.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1005-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2039.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1005-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3939.9,
+     "discountPrice": null,
+     "stock": 21
+    },
+    {
+     "sku": "HE-1005-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 1979.9,
+     "discountPrice": null,
+     "stock": 10
+    }
+   ],
+   "images": [
+    "/images/rugs/sultan-akrilik-hali-pembe-1005-1.svg",
+    "/images/rugs/sultan-akrilik-hali-pembe-1005-2.svg"
+   ],
+   "createdDaysAgo": 1
+  },
+  {
+   "name": "Mira Akrilik Halı - Antrasit 1006",
+   "slug": "mira-akrilik-hali-antrasit-1006",
+   "skuBase": "HE-1006",
+   "category": "akrilik-hali",
+   "style": "modern",
+   "color": "Antrasit",
+   "hex": "#3a3a3a",
+   "featured": true,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1006-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1069.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1006-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2239.9,
+     "discountPrice": null,
+     "stock": 6
+    },
+    {
+     "sku": "HE-1006-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 4839.9,
+     "discountPrice": null,
+     "stock": 6
+    },
+    {
+     "sku": "HE-1006-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2009.9,
+     "discountPrice": null,
+     "stock": 0
+    }
+   ],
+   "images": [
+    "/images/rugs/mira-akrilik-hali-antrasit-1006-1.svg",
+    "/images/rugs/mira-akrilik-hali-antrasit-1006-2.svg"
+   ],
+   "createdDaysAgo": 10
+  },
+  {
+   "name": "Toros Asimetrik Halı - Krem 1007",
+   "slug": "toros-asimetrik-hali-krem-1007",
+   "skuBase": "HE-1007",
+   "category": "asimetrik-hali",
+   "style": "abstract",
+   "color": "Krem",
+   "hex": "#e9dfc9",
+   "featured": true,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1007-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1369.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1007-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2299.9,
+     "discountPrice": null,
+     "stock": 9
+    },
+    {
+     "sku": "HE-1007-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2779.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1007-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4739.9,
+     "discountPrice": null,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1007-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6149.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1007-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2899.9,
+     "discountPrice": null,
+     "stock": 19
+    }
+   ],
+   "images": [
+    "/images/rugs/toros-asimetrik-hali-krem-1007-1.svg",
+    "/images/rugs/toros-asimetrik-hali-krem-1007-2.svg"
+   ],
+   "createdDaysAgo": 100
+  },
+  {
+   "name": "Ege Asimetrik Halı - Bej 1008",
+   "slug": "ege-asimetrik-hali-bej-1008",
+   "skuBase": "HE-1008",
+   "category": "asimetrik-hali",
+   "style": "abstract",
+   "color": "Bej",
+   "hex": "#cdb894",
+   "featured": false,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1008-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1399.9,
+     "discountPrice": 979.9,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1008-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2609.9,
+     "discountPrice": 1829.9,
+     "stock": 6
+    },
+    {
+     "sku": "HE-1008-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2829.9,
+     "discountPrice": 1979.9,
+     "stock": 12
+    },
+    {
+     "sku": "HE-1008-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3779.9,
+     "discountPrice": 2649.9,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1008-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7249.9,
+     "discountPrice": 5069.9,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1008-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2749.9,
+     "discountPrice": 1919.9,
+     "stock": 24
+    }
+   ],
+   "images": [
+    "/images/rugs/ege-asimetrik-hali-bej-1008-1.svg",
+    "/images/rugs/ege-asimetrik-hali-bej-1008-2.svg"
+   ],
+   "createdDaysAgo": 86
+  },
+  {
+   "name": "Defne Asimetrik Halı - Mavi 1009",
+   "slug": "defne-asimetrik-hali-mavi-1009",
+   "skuBase": "HE-1009",
+   "category": "asimetrik-hali",
+   "style": "abstract",
+   "color": "Mavi",
+   "hex": "#3b6e8f",
+   "featured": false,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1009-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1359.9,
+     "discountPrice": 1089.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1009-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2109.9,
+     "discountPrice": 1689.9,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1009-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2209.9,
+     "discountPrice": 1769.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1009-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4569.9,
+     "discountPrice": 3659.9,
+     "stock": 4
+    },
+    {
+     "sku": "HE-1009-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3029.9,
+     "discountPrice": 2419.9,
+     "stock": 25
+    }
+   ],
+   "images": [
+    "/images/rugs/defne-asimetrik-hali-mavi-1009-1.svg",
+    "/images/rugs/defne-asimetrik-hali-mavi-1009-2.svg"
+   ],
+   "createdDaysAgo": 54
+  },
+  {
+   "name": "Nil Asitane - Krem 1010",
+   "slug": "nil-asitane-krem-1010",
+   "skuBase": "HE-1010",
+   "category": "asitane-serisi",
+   "style": "medallion",
+   "color": "Krem",
+   "hex": "#e9dfc9",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1010-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1989.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1010-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 3469.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1010-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 6589.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1010-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7899.9,
+     "discountPrice": null,
+     "stock": 15
+    }
+   ],
+   "images": [
+    "/images/rugs/nil-asitane-krem-1010-1.svg",
+    "/images/rugs/nil-asitane-krem-1010-2.svg"
+   ],
+   "createdDaysAgo": 3
+  },
+  {
+   "name": "Rüya Asitane - Mavi 1011",
+   "slug": "ruya-asitane-mavi-1011",
+   "skuBase": "HE-1011",
+   "category": "asitane-serisi",
+   "style": "medallion",
+   "color": "Mavi",
+   "hex": "#3b6e8f",
+   "featured": true,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1011-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1859.9,
+     "discountPrice": null,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1011-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2859.9,
+     "discountPrice": null,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1011-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 3579.9,
+     "discountPrice": null,
+     "stock": 8
+    },
+    {
+     "sku": "HE-1011-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 5499.9,
+     "discountPrice": null,
+     "stock": 5
+    }
+   ],
+   "images": [
+    "/images/rugs/ruya-asitane-mavi-1011-1.svg",
+    "/images/rugs/ruya-asitane-mavi-1011-2.svg"
+   ],
+   "createdDaysAgo": 92
+  },
+  {
+   "name": "Truva Asitane - Hardal 1012",
+   "slug": "truva-asitane-hardal-1012",
+   "skuBase": "HE-1012",
+   "category": "asitane-serisi",
+   "style": "medallion",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": true,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1012-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 2139.9,
+     "discountPrice": 1499.9,
+     "stock": 21
+    },
+    {
+     "sku": "HE-1012-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2739.9,
+     "discountPrice": 1919.9,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1012-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 3389.9,
+     "discountPrice": 2369.9,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1012-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 5519.9,
+     "discountPrice": 3859.9,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1012-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 9029.9,
+     "discountPrice": 6319.9,
+     "stock": 4
+    },
+    {
+     "sku": "HE-1012-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3529.9,
+     "discountPrice": 2469.9,
+     "stock": 7
+    }
+   ],
+   "images": [
+    "/images/rugs/truva-asitane-hardal-1012-1.svg",
+    "/images/rugs/truva-asitane-hardal-1012-2.svg"
+   ],
+   "createdDaysAgo": 81
+  },
+  {
+   "name": "Safir Banyo Paspası - Mor 1013",
+   "slug": "safir-banyo-paspasi-mor-1013",
+   "skuBase": "HE-1013",
+   "category": "banyo-paspasi",
+   "style": "solid",
+   "color": "Mor",
+   "hex": "#6b3f73",
+   "featured": true,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1013-5060",
+     "widthCm": 50,
+     "lengthCm": 60,
+     "price": 179.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1013-60100",
+     "widthCm": 60,
+     "lengthCm": 100,
+     "price": 449.9,
+     "discountPrice": null,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1013-70120",
+     "widthCm": 70,
+     "lengthCm": 120,
+     "price": 509.9,
+     "discountPrice": null,
+     "stock": 10
+    }
+   ],
+   "images": [
+    "/images/rugs/safir-banyo-paspasi-mor-1013-1.svg",
+    "/images/rugs/safir-banyo-paspasi-mor-1013-2.svg"
+   ],
+   "createdDaysAgo": 49
+  },
+  {
+   "name": "Leyla Banyo Paspası - Mavi 1014",
+   "slug": "leyla-banyo-paspasi-mavi-1014",
+   "skuBase": "HE-1014",
+   "category": "banyo-paspasi",
+   "style": "solid",
+   "color": "Mavi",
+   "hex": "#3b6e8f",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1014-5060",
+     "widthCm": 50,
+     "lengthCm": 60,
+     "price": 229.9,
+     "discountPrice": 159.9,
+     "stock": 25
+    },
+    {
+     "sku": "HE-1014-60100",
+     "widthCm": 60,
+     "lengthCm": 100,
+     "price": 389.9,
+     "discountPrice": 269.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1014-70120",
+     "widthCm": 70,
+     "lengthCm": 120,
+     "price": 629.9,
+     "discountPrice": 439.9,
+     "stock": 18
+    }
+   ],
+   "images": [
+    "/images/rugs/leyla-banyo-paspasi-mavi-1014-1.svg",
+    "/images/rugs/leyla-banyo-paspasi-mavi-1014-2.svg"
+   ],
+   "createdDaysAgo": 85
+  },
+  {
+   "name": "Galata Bohem Halı - Hardal 1015",
+   "slug": "galata-bohem-hali-hardal-1015",
+   "skuBase": "HE-1015",
+   "category": "bohem-hali",
+   "style": "kilim",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1015-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1339.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1015-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2029.9,
+     "discountPrice": null,
+     "stock": 23
+    },
+    {
+     "sku": "HE-1015-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2189.9,
+     "discountPrice": null,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1015-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3769.9,
+     "discountPrice": null,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1015-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5569.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1015-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2149.9,
+     "discountPrice": null,
+     "stock": 11
+    }
+   ],
+   "images": [
+    "/images/rugs/galata-bohem-hali-hardal-1015-1.svg",
+    "/images/rugs/galata-bohem-hali-hardal-1015-2.svg"
+   ],
+   "createdDaysAgo": 37
+  },
+  {
+   "name": "Alanya Bohem Halı - Lacivert 1016",
+   "slug": "alanya-bohem-hali-lacivert-1016",
+   "skuBase": "HE-1016",
+   "category": "bohem-hali",
+   "style": "kilim",
+   "color": "Lacivert",
+   "hex": "#1f2f55",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1016-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1259.9,
+     "discountPrice": null,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1016-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2219.9,
+     "discountPrice": null,
+     "stock": 15
+    },
+    {
+     "sku": "HE-1016-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2149.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1016-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4099.9,
+     "discountPrice": null,
+     "stock": 12
+    },
+    {
+     "sku": "HE-1016-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6029.9,
+     "discountPrice": null,
+     "stock": 20
+    }
+   ],
+   "images": [
+    "/images/rugs/alanya-bohem-hali-lacivert-1016-1.svg",
+    "/images/rugs/alanya-bohem-hali-lacivert-1016-2.svg"
+   ],
+   "createdDaysAgo": 10
+  },
+  {
+   "name": "Sümela Bohem Halı - Mor 1017",
+   "slug": "sumela-bohem-hali-mor-1017",
+   "skuBase": "HE-1017",
+   "category": "bohem-hali",
+   "style": "kilim",
+   "color": "Mor",
+   "hex": "#6b3f73",
+   "featured": true,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1017-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1029.9,
+     "discountPrice": null,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1017-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1759.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1017-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2109.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1017-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3779.9,
+     "discountPrice": null,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1017-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6059.9,
+     "discountPrice": null,
+     "stock": 14
+    }
+   ],
+   "images": [
+    "/images/rugs/sumela-bohem-hali-mor-1017-1.svg",
+    "/images/rugs/sumela-bohem-hali-mor-1017-2.svg"
+   ],
+   "createdDaysAgo": 90
+  },
+  {
+   "name": "Mardin Bukle Halı - Antrasit 1018",
+   "slug": "mardin-bukle-hali-antrasit-1018",
+   "skuBase": "HE-1018",
+   "category": "bukle-hali",
+   "style": "loop",
+   "color": "Antrasit",
+   "hex": "#3a3a3a",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1018-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1669.9,
+     "discountPrice": null,
+     "stock": 23
+    },
+    {
+     "sku": "HE-1018-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2299.9,
+     "discountPrice": null,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1018-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2429.9,
+     "discountPrice": null,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1018-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4819.9,
+     "discountPrice": null,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1018-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6729.9,
+     "discountPrice": null,
+     "stock": 0
+    }
+   ],
+   "images": [
+    "/images/rugs/mardin-bukle-hali-antrasit-1018-1.svg",
+    "/images/rugs/mardin-bukle-hali-antrasit-1018-2.svg"
+   ],
+   "createdDaysAgo": 0
+  },
+  {
+   "name": "Bodrum Bukle Halı - Hardal 1019",
+   "slug": "bodrum-bukle-hali-hardal-1019",
+   "skuBase": "HE-1019",
+   "category": "bukle-hali",
+   "style": "loop",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": true,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1019-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1689.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1019-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2549.9,
+     "discountPrice": null,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1019-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2749.9,
+     "discountPrice": null,
+     "stock": 8
+    },
+    {
+     "sku": "HE-1019-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4959.9,
+     "discountPrice": null,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1019-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7079.9,
+     "discountPrice": null,
+     "stock": 10
+    },
+    {
+     "sku": "HE-1019-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2769.9,
+     "discountPrice": null,
+     "stock": 24
+    }
+   ],
+   "images": [
+    "/images/rugs/bodrum-bukle-hali-hardal-1019-1.svg",
+    "/images/rugs/bodrum-bukle-hali-hardal-1019-2.svg"
+   ],
+   "createdDaysAgo": 11
+  },
+  {
+   "name": "Lalezar Düz Renk Halı - Lacivert 1020",
+   "slug": "lalezar-duz-renk-hali-lacivert-1020",
+   "skuBase": "HE-1020",
+   "category": "duz-renk-hali",
+   "style": "solid",
+   "color": "Lacivert",
+   "hex": "#1f2f55",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1020-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1199.9,
+     "discountPrice": null,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1020-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3339.9,
+     "discountPrice": null,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1020-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5119.9,
+     "discountPrice": null,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1020-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2369.9,
+     "discountPrice": null,
+     "stock": 25
+    }
+   ],
+   "images": [
+    "/images/rugs/lalezar-duz-renk-hali-lacivert-1020-1.svg",
+    "/images/rugs/lalezar-duz-renk-hali-lacivert-1020-2.svg"
+   ],
+   "createdDaysAgo": 85
+  },
+  {
+   "name": "Efes Düz Renk Halı - Hardal 1021",
+   "slug": "efes-duz-renk-hali-hardal-1021",
+   "skuBase": "HE-1021",
+   "category": "duz-renk-hali",
+   "style": "solid",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1021-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1029.9,
+     "discountPrice": 879.9,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1021-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1809.9,
+     "discountPrice": 1539.9,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1021-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2159.9,
+     "discountPrice": 1839.9,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1021-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5079.9,
+     "discountPrice": 4319.9,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1021-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2299.9,
+     "discountPrice": 1949.9,
+     "stock": 22
+    }
+   ],
+   "images": [
+    "/images/rugs/efes-duz-renk-hali-hardal-1021-1.svg",
+    "/images/rugs/efes-duz-renk-hali-hardal-1021-2.svg"
+   ],
+   "createdDaysAgo": 39
+  },
+  {
+   "name": "Kapadokya Düz Renk Halı - Hardal 1022",
+   "slug": "kapadokya-duz-renk-hali-hardal-1022",
+   "skuBase": "HE-1022",
+   "category": "duz-renk-hali",
+   "style": "solid",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1022-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 939.9,
+     "discountPrice": 699.9,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1022-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2089.9,
+     "discountPrice": 1569.9,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1022-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3059.9,
+     "discountPrice": 2289.9,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1022-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5249.9,
+     "discountPrice": 3939.9,
+     "stock": 6
+    },
+    {
+     "sku": "HE-1022-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2089.9,
+     "discountPrice": 1569.9,
+     "stock": 12
+    }
+   ],
+   "images": [
+    "/images/rugs/kapadokya-duz-renk-hali-hardal-1022-1.svg",
+    "/images/rugs/kapadokya-duz-renk-hali-hardal-1022-2.svg"
+   ],
+   "createdDaysAgo": 96
+  },
+  {
+   "name": "Sultan Göbekli Halı - Gri 1023",
+   "slug": "sultan-gobekli-hali-gri-1023",
+   "skuBase": "HE-1023",
+   "category": "gobekli-hali",
+   "style": "medallion",
+   "color": "Gri",
+   "hex": "#9a9a9a",
+   "featured": false,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1023-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1469.9,
+     "discountPrice": 1099.9,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1023-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 3059.9,
+     "discountPrice": 2289.9,
+     "stock": 25
+    },
+    {
+     "sku": "HE-1023-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2769.9,
+     "discountPrice": 2079.9,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1023-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 5419.9,
+     "discountPrice": 4059.9,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1023-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6899.9,
+     "discountPrice": 5169.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1023-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2919.9,
+     "discountPrice": 2189.9,
+     "stock": 14
+    }
+   ],
+   "images": [
+    "/images/rugs/sultan-gobekli-hali-gri-1023-1.svg",
+    "/images/rugs/sultan-gobekli-hali-gri-1023-2.svg"
+   ],
+   "createdDaysAgo": 55
+  },
+  {
+   "name": "Mira Göbekli Halı - Yeşil 1024",
+   "slug": "mira-gobekli-hali-yesil-1024",
+   "skuBase": "HE-1024",
+   "category": "gobekli-hali",
+   "style": "medallion",
+   "color": "Yeşil",
+   "hex": "#3f5b45",
+   "featured": true,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1024-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1429.9,
+     "discountPrice": 1139.9,
+     "stock": 15
+    },
+    {
+     "sku": "HE-1024-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 3059.9,
+     "discountPrice": 2449.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1024-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 8639.9,
+     "discountPrice": 6909.9,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1024-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3679.9,
+     "discountPrice": 2939.9,
+     "stock": 0
+    }
+   ],
+   "images": [
+    "/images/rugs/mira-gobekli-hali-yesil-1024-1.svg",
+    "/images/rugs/mira-gobekli-hali-yesil-1024-2.svg"
+   ],
+   "createdDaysAgo": 5
+  },
+  {
+   "name": "Ege Jüt Hasır Halı - Antrasit 1025",
+   "slug": "ege-jut-hasir-hali-antrasit-1025",
+   "skuBase": "HE-1025",
+   "category": "jut-hasir-hali",
+   "style": "jute",
+   "color": "Antrasit",
+   "hex": "#3a3a3a",
+   "featured": true,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1025-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1339.9,
+     "discountPrice": null,
+     "stock": 21
+    },
+    {
+     "sku": "HE-1025-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1849.9,
+     "discountPrice": null,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1025-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2019.9,
+     "discountPrice": null,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1025-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3639.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1025-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5549.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1025-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2759.9,
+     "discountPrice": null,
+     "stock": 19
+    }
+   ],
+   "images": [
+    "/images/rugs/ege-jut-hasir-hali-antrasit-1025-1.svg",
+    "/images/rugs/ege-jut-hasir-hali-antrasit-1025-2.svg"
+   ],
+   "createdDaysAgo": 104
+  },
+  {
+   "name": "Defne Jüt Hasır Halı - Krem 1026",
+   "slug": "defne-jut-hasir-hali-krem-1026",
+   "skuBase": "HE-1026",
+   "category": "jut-hasir-hali",
+   "style": "jute",
+   "color": "Krem",
+   "hex": "#e9dfc9",
+   "featured": false,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1026-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1309.9,
+     "discountPrice": null,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1026-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2399.9,
+     "discountPrice": null,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1026-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2449.9,
+     "discountPrice": null,
+     "stock": 14
+    }
+   ],
+   "images": [
+    "/images/rugs/defne-jut-hasir-hali-krem-1026-1.svg",
+    "/images/rugs/defne-jut-hasir-hali-krem-1026-2.svg"
+   ],
+   "createdDaysAgo": 83
+  },
+  {
+   "name": "Nil Jüt Hasır Halı - Yeşil 1027",
+   "slug": "nil-jut-hasir-hali-yesil-1027",
+   "skuBase": "HE-1027",
+   "category": "jut-hasir-hali",
+   "style": "jute",
+   "color": "Yeşil",
+   "hex": "#3f5b45",
+   "featured": true,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1027-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1089.9,
+     "discountPrice": 759.9,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1027-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2019.9,
+     "discountPrice": 1409.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1027-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1949.9,
+     "discountPrice": 1359.9,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1027-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3429.9,
+     "discountPrice": 2399.9,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1027-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5949.9,
+     "discountPrice": 4159.9,
+     "stock": 6
+    },
+    {
+     "sku": "HE-1027-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2709.9,
+     "discountPrice": 1899.9,
+     "stock": 17
+    }
+   ],
+   "images": [
+    "/images/rugs/nil-jut-hasir-hali-yesil-1027-1.svg",
+    "/images/rugs/nil-jut-hasir-hali-yesil-1027-2.svg"
+   ],
+   "createdDaysAgo": 42
+  },
+  {
+   "name": "Rüya Kilimler - Pembe 1028",
+   "slug": "ruya-kilimler-pembe-1028",
+   "skuBase": "HE-1028",
+   "category": "kilimler",
+   "style": "kilim",
+   "color": "Pembe",
+   "hex": "#c46a86",
+   "featured": true,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1028-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1499.9,
+     "discountPrice": 1049.9,
+     "stock": 25
+    },
+    {
+     "sku": "HE-1028-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2249.9,
+     "discountPrice": 1569.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1028-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2419.9,
+     "discountPrice": 1689.9,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1028-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4039.9,
+     "discountPrice": 2829.9,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1028-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6039.9,
+     "discountPrice": 4229.9,
+     "stock": 9
+    },
+    {
+     "sku": "HE-1028-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3119.9,
+     "discountPrice": 2179.9,
+     "stock": 3
+    }
+   ],
+   "images": [
+    "/images/rugs/ruya-kilimler-pembe-1028-1.svg",
+    "/images/rugs/ruya-kilimler-pembe-1028-2.svg"
+   ],
+   "createdDaysAgo": 62
+  },
+  {
+   "name": "Truva Kilimler - Yeşil 1029",
+   "slug": "truva-kilimler-yesil-1029",
+   "skuBase": "HE-1029",
+   "category": "kilimler",
+   "style": "kilim",
+   "color": "Yeşil",
+   "hex": "#3f5b45",
+   "featured": false,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1029-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1329.9,
+     "discountPrice": 1129.9,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1029-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2499.9,
+     "discountPrice": 2119.9,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1029-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2359.9,
+     "discountPrice": 2009.9,
+     "stock": 8
+    },
+    {
+     "sku": "HE-1029-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6519.9,
+     "discountPrice": 5539.9,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1029-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2989.9,
+     "discountPrice": 2539.9,
+     "stock": 5
+    }
+   ],
+   "images": [
+    "/images/rugs/truva-kilimler-yesil-1029-1.svg",
+    "/images/rugs/truva-kilimler-yesil-1029-2.svg"
+   ],
+   "createdDaysAgo": 60
+  },
+  {
+   "name": "Leyla Klasik Halı - Bej 1030",
+   "slug": "leyla-klasik-hali-bej-1030",
+   "skuBase": "HE-1030",
+   "category": "klasik-hali",
+   "style": "medallion",
+   "color": "Bej",
+   "hex": "#cdb894",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1030-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1729.9,
+     "discountPrice": 1299.9,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1030-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2959.9,
+     "discountPrice": 2219.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1030-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4139.9,
+     "discountPrice": 3099.9,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1030-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7039.9,
+     "discountPrice": 5279.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1030-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2809.9,
+     "discountPrice": 2109.9,
+     "stock": 23
+    }
+   ],
+   "images": [
+    "/images/rugs/leyla-klasik-hali-bej-1030-1.svg",
+    "/images/rugs/leyla-klasik-hali-bej-1030-2.svg"
+   ],
+   "createdDaysAgo": 114
+  },
+  {
+   "name": "Pera Klasik Halı - Bordo 1031",
+   "slug": "pera-klasik-hali-bordo-1031",
+   "skuBase": "HE-1031",
+   "category": "klasik-hali",
+   "style": "medallion",
+   "color": "Bordo",
+   "hex": "#7a1f2b",
+   "featured": false,
+   "collections": [
+    "hand-woven"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1031-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1499.9,
+     "discountPrice": 1049.9,
+     "stock": 15
+    },
+    {
+     "sku": "HE-1031-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2669.9,
+     "discountPrice": 1869.9,
+     "stock": 25
+    },
+    {
+     "sku": "HE-1031-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2799.9,
+     "discountPrice": 1959.9,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1031-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 5189.9,
+     "discountPrice": 3629.9,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1031-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6719.9,
+     "discountPrice": 4699.9,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1031-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2709.9,
+     "discountPrice": 1899.9,
+     "stock": 20
+    }
+   ],
+   "images": [
+    "/images/rugs/pera-klasik-hali-bordo-1031-1.svg",
+    "/images/rugs/pera-klasik-hali-bordo-1031-2.svg"
+   ],
+   "createdDaysAgo": 100
+  },
+  {
+   "name": "Galata Klasik Halı - Mor 1032",
+   "slug": "galata-klasik-hali-mor-1032",
+   "skuBase": "HE-1032",
+   "category": "klasik-hali",
+   "style": "medallion",
+   "color": "Mor",
+   "hex": "#6b3f73",
+   "featured": true,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1032-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1589.9,
+     "discountPrice": null,
+     "stock": 12
+    },
+    {
+     "sku": "HE-1032-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2319.9,
+     "discountPrice": null,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1032-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2759.9,
+     "discountPrice": null,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1032-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4689.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1032-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 8119.9,
+     "discountPrice": null,
+     "stock": 4
+    },
+    {
+     "sku": "HE-1032-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2899.9,
+     "discountPrice": null,
+     "stock": 12
+    }
+   ],
+   "images": [
+    "/images/rugs/galata-klasik-hali-mor-1032-1.svg",
+    "/images/rugs/galata-klasik-hali-mor-1032-2.svg"
+   ],
+   "createdDaysAgo": 46
+  },
+  {
+   "name": "Alanya Limitli Seri Halı - Pembe 1033",
+   "slug": "alanya-limitli-seri-hali-pembe-1033",
+   "skuBase": "HE-1033",
+   "category": "limitli-seri-halilar",
+   "style": "abstract",
+   "color": "Pembe",
+   "hex": "#c46a86",
+   "featured": true,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1033-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 3969.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1033-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 6859.9,
+     "discountPrice": null,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1033-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 12039.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1033-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 19719.9,
+     "discountPrice": null,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1033-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 6439.9,
+     "discountPrice": null,
+     "stock": 6
+    }
+   ],
+   "images": [
+    "/images/rugs/alanya-limitli-seri-hali-pembe-1033-1.svg",
+    "/images/rugs/alanya-limitli-seri-hali-pembe-1033-2.svg"
+   ],
+   "createdDaysAgo": 111
+  },
+  {
+   "name": "Sümela Limitli Seri Halı - Yeşil 1034",
+   "slug": "sumela-limitli-seri-hali-yesil-1034",
+   "skuBase": "HE-1034",
+   "category": "limitli-seri-halilar",
+   "style": "abstract",
+   "color": "Yeşil",
+   "hex": "#3f5b45",
+   "featured": false,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1034-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 3729.9,
+     "discountPrice": null,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1034-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 6279.9,
+     "discountPrice": null,
+     "stock": 21
+    },
+    {
+     "sku": "HE-1034-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 15399.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1034-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 7459.9,
+     "discountPrice": null,
+     "stock": 10
+    }
+   ],
+   "images": [
+    "/images/rugs/sumela-limitli-seri-hali-yesil-1034-1.svg",
+    "/images/rugs/sumela-limitli-seri-hali-yesil-1034-2.svg"
+   ],
+   "createdDaysAgo": 51
+  },
+  {
+   "name": "Bodrum Microfiber Halı - Gri 1035",
+   "slug": "bodrum-microfiber-hali-gri-1035",
+   "skuBase": "HE-1035",
+   "category": "microfiber-hali",
+   "style": "solid",
+   "color": "Gri",
+   "hex": "#9a9a9a",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1035-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 989.9,
+     "discountPrice": 789.9,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1035-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1709.9,
+     "discountPrice": 1369.9,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1035-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1979.9,
+     "discountPrice": 1579.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1035-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 2889.9,
+     "discountPrice": 2309.9,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1035-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 4739.9,
+     "discountPrice": 3789.9,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1035-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 1759.9,
+     "discountPrice": 1409.9,
+     "stock": 6
+    }
+   ],
+   "images": [
+    "/images/rugs/bodrum-microfiber-hali-gri-1035-1.svg",
+    "/images/rugs/bodrum-microfiber-hali-gri-1035-2.svg"
+   ],
+   "createdDaysAgo": 93
+  },
+  {
+   "name": "Nova Microfiber Halı - Bej 1036",
+   "slug": "nova-microfiber-hali-bej-1036",
+   "skuBase": "HE-1036",
+   "category": "microfiber-hali",
+   "style": "solid",
+   "color": "Bej",
+   "hex": "#cdb894",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1036-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1769.9,
+     "discountPrice": null,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1036-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1559.9,
+     "discountPrice": null,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1036-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3269.9,
+     "discountPrice": null,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1036-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5299.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1036-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2079.9,
+     "discountPrice": null,
+     "stock": 8
+    }
+   ],
+   "images": [
+    "/images/rugs/nova-microfiber-hali-bej-1036-1.svg",
+    "/images/rugs/nova-microfiber-hali-bej-1036-2.svg"
+   ],
+   "createdDaysAgo": 40
+  },
+  {
+   "name": "Lalezar Microfiber Halı - Hardal 1037",
+   "slug": "lalezar-microfiber-hali-hardal-1037",
+   "skuBase": "HE-1037",
+   "category": "microfiber-hali",
+   "style": "solid",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1037-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 879.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1037-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1579.9,
+     "discountPrice": null,
+     "stock": 12
+    },
+    {
+     "sku": "HE-1037-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1599.9,
+     "discountPrice": null,
+     "stock": 12
+    },
+    {
+     "sku": "HE-1037-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 2579.9,
+     "discountPrice": null,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1037-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5279.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1037-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 1879.9,
+     "discountPrice": null,
+     "stock": 23
+    }
+   ],
+   "images": [
+    "/images/rugs/lalezar-microfiber-hali-hardal-1037-1.svg",
+    "/images/rugs/lalezar-microfiber-hali-hardal-1037-2.svg"
+   ],
+   "createdDaysAgo": 100
+  },
+  {
+   "name": "Efes Peluş Halı - Yeşil 1038",
+   "slug": "efes-pelus-hali-yesil-1038",
+   "skuBase": "HE-1038",
+   "category": "pelus-hali",
+   "style": "shaggy",
+   "color": "Yeşil",
+   "hex": "#3f5b45",
+   "featured": true,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1038-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1199.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1038-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2109.9,
+     "discountPrice": null,
+     "stock": 23
+    },
+    {
+     "sku": "HE-1038-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4199.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1038-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6029.9,
+     "discountPrice": null,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1038-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2979.9,
+     "discountPrice": null,
+     "stock": 23
+    }
+   ],
+   "images": [
+    "/images/rugs/efes-pelus-hali-yesil-1038-1.svg",
+    "/images/rugs/efes-pelus-hali-yesil-1038-2.svg"
+   ],
+   "createdDaysAgo": 111
+  },
+  {
+   "name": "Kapadokya Peluş Halı - Antrasit 1039",
+   "slug": "kapadokya-pelus-hali-antrasit-1039",
+   "skuBase": "HE-1039",
+   "category": "pelus-hali",
+   "style": "shaggy",
+   "color": "Antrasit",
+   "hex": "#3a3a3a",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1039-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1369.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1039-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2329.9,
+     "discountPrice": null,
+     "stock": 21
+    },
+    {
+     "sku": "HE-1039-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2059.9,
+     "discountPrice": null,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1039-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3799.9,
+     "discountPrice": null,
+     "stock": 19
+    },
+    {
+     "sku": "HE-1039-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5539.9,
+     "discountPrice": null,
+     "stock": 4
+    },
+    {
+     "sku": "HE-1039-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3009.9,
+     "discountPrice": null,
+     "stock": 11
+    }
+   ],
+   "images": [
+    "/images/rugs/kapadokya-pelus-hali-antrasit-1039-1.svg",
+    "/images/rugs/kapadokya-pelus-hali-antrasit-1039-2.svg"
+   ],
+   "createdDaysAgo": 119
+  },
+  {
+   "name": "Mira Seri Sonu Fırsatı - Pembe 1040",
+   "slug": "mira-seri-sonu-firsati-pembe-1040",
+   "skuBase": "HE-1040",
+   "category": "seri-sonu-firsati",
+   "style": "modern",
+   "color": "Pembe",
+   "hex": "#c46a86",
+   "featured": false,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1040-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 919.9,
+     "discountPrice": 739.9,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1040-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1489.9,
+     "discountPrice": 1189.9,
+     "stock": 18
+    },
+    {
+     "sku": "HE-1040-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1619.9,
+     "discountPrice": 1299.9,
+     "stock": 4
+    },
+    {
+     "sku": "HE-1040-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 2429.9,
+     "discountPrice": 1939.9,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1040-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 4379.9,
+     "discountPrice": 3499.9,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1040-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 1599.9,
+     "discountPrice": 1279.9,
+     "stock": 11
+    }
+   ],
+   "images": [
+    "/images/rugs/mira-seri-sonu-firsati-pembe-1040-1.svg",
+    "/images/rugs/mira-seri-sonu-firsati-pembe-1040-2.svg"
+   ],
+   "createdDaysAgo": 11
+  },
+  {
+   "name": "Toros Seri Sonu Fırsatı - Terracotta 1041",
+   "slug": "toros-seri-sonu-firsati-terracotta-1041",
+   "skuBase": "HE-1041",
+   "category": "seri-sonu-firsati",
+   "style": "modern",
+   "color": "Terracotta",
+   "hex": "#b5543a",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1041-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1629.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1041-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1729.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1041-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 4139.9,
+     "discountPrice": null,
+     "stock": 12
+    },
+    {
+     "sku": "HE-1041-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 1959.9,
+     "discountPrice": null,
+     "stock": 20
+    }
+   ],
+   "images": [
+    "/images/rugs/toros-seri-sonu-firsati-terracotta-1041-1.svg",
+    "/images/rugs/toros-seri-sonu-firsati-terracotta-1041-2.svg"
+   ],
+   "createdDaysAgo": 13
+  },
+  {
+   "name": "Ege Seri Sonu Fırsatı - Gri 1042",
+   "slug": "ege-seri-sonu-firsati-gri-1042",
+   "skuBase": "HE-1042",
+   "category": "seri-sonu-firsati",
+   "style": "modern",
+   "color": "Gri",
+   "hex": "#9a9a9a",
+   "featured": true,
+   "collections": [
+    "modern-yasam"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1042-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 819.9,
+     "discountPrice": null,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1042-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1369.9,
+     "discountPrice": null,
+     "stock": 23
+    },
+    {
+     "sku": "HE-1042-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 1569.9,
+     "discountPrice": null,
+     "stock": 10
+    },
+    {
+     "sku": "HE-1042-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 1599.9,
+     "discountPrice": null,
+     "stock": 0
+    }
+   ],
+   "images": [
+    "/images/rugs/ege-seri-sonu-firsati-gri-1042-1.svg",
+    "/images/rugs/ege-seri-sonu-firsati-gri-1042-2.svg"
+   ],
+   "createdDaysAgo": 47
+  },
+  {
+   "name": "Defne Shaggy Halı - Lacivert 1043",
+   "slug": "defne-shaggy-hali-lacivert-1043",
+   "skuBase": "HE-1043",
+   "category": "shaggy-hali",
+   "style": "shaggy",
+   "color": "Lacivert",
+   "hex": "#1f2f55",
+   "featured": false,
+   "collections": [],
+   "variants": [
+    {
+     "sku": "HE-1043-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1259.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1043-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1989.9,
+     "discountPrice": null,
+     "stock": 11
+    },
+    {
+     "sku": "HE-1043-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2249.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1043-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3989.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1043-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6389.9,
+     "discountPrice": null,
+     "stock": 24
+    },
+    {
+     "sku": "HE-1043-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2529.9,
+     "discountPrice": null,
+     "stock": 5
+    }
+   ],
+   "images": [
+    "/images/rugs/defne-shaggy-hali-lacivert-1043-1.svg",
+    "/images/rugs/defne-shaggy-hali-lacivert-1043-2.svg"
+   ],
+   "createdDaysAgo": 38
+  },
+  {
+   "name": "Nil Shaggy Halı - Bej 1044",
+   "slug": "nil-shaggy-hali-bej-1044",
+   "skuBase": "HE-1044",
+   "category": "shaggy-hali",
+   "style": "shaggy",
+   "color": "Bej",
+   "hex": "#cdb894",
+   "featured": false,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1044-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1399.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1044-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1989.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1044-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2189.9,
+     "discountPrice": null,
+     "stock": 17
+    },
+    {
+     "sku": "HE-1044-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 3869.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1044-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 5989.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1044-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2579.9,
+     "discountPrice": null,
+     "stock": 20
+    }
+   ],
+   "images": [
+    "/images/rugs/nil-shaggy-hali-bej-1044-1.svg",
+    "/images/rugs/nil-shaggy-hali-bej-1044-2.svg"
+   ],
+   "createdDaysAgo": 98
+  },
+  {
+   "name": "Truva Sisal Halı - Yeşil 1045",
+   "slug": "truva-sisal-hali-yesil-1045",
+   "skuBase": "HE-1045",
+   "category": "sisal-hali",
+   "style": "jute",
+   "color": "Yeşil",
+   "hex": "#3f5b45",
+   "featured": true,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1045-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1449.9,
+     "discountPrice": null,
+     "stock": 2
+    },
+    {
+     "sku": "HE-1045-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2589.9,
+     "discountPrice": null,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1045-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2469.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1045-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4349.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1045-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7339.9,
+     "discountPrice": null,
+     "stock": 10
+    },
+    {
+     "sku": "HE-1045-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2949.9,
+     "discountPrice": null,
+     "stock": 3
+    }
+   ],
+   "images": [
+    "/images/rugs/truva-sisal-hali-yesil-1045-1.svg",
+    "/images/rugs/truva-sisal-hali-yesil-1045-2.svg"
+   ],
+   "createdDaysAgo": 10
+  },
+  {
+   "name": "Safir Sisal Halı - Pembe 1046",
+   "slug": "safir-sisal-hali-pembe-1046",
+   "skuBase": "HE-1046",
+   "category": "sisal-hali",
+   "style": "jute",
+   "color": "Pembe",
+   "hex": "#c46a86",
+   "featured": false,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1046-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1439.9,
+     "discountPrice": 1149.9,
+     "stock": 5
+    },
+    {
+     "sku": "HE-1046-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 1999.9,
+     "discountPrice": 1599.9,
+     "stock": 10
+    },
+    {
+     "sku": "HE-1046-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2589.9,
+     "discountPrice": 2069.9,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1046-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7169.9,
+     "discountPrice": 5739.9,
+     "stock": 25
+    }
+   ],
+   "images": [
+    "/images/rugs/safir-sisal-hali-pembe-1046-1.svg",
+    "/images/rugs/safir-sisal-hali-pembe-1046-2.svg"
+   ],
+   "createdDaysAgo": 2
+  },
+  {
+   "name": "Leyla Sisal Halı - Krem 1047",
+   "slug": "leyla-sisal-hali-krem-1047",
+   "skuBase": "HE-1047",
+   "category": "sisal-hali",
+   "style": "jute",
+   "color": "Krem",
+   "hex": "#e9dfc9",
+   "featured": false,
+   "collections": [
+    "dogal-dokular"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1047-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1449.9,
+     "discountPrice": 1089.9,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1047-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2339.9,
+     "discountPrice": 1749.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1047-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2129.9,
+     "discountPrice": 1599.9,
+     "stock": 1
+    },
+    {
+     "sku": "HE-1047-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4069.9,
+     "discountPrice": 3049.9,
+     "stock": 10
+    },
+    {
+     "sku": "HE-1047-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7329.9,
+     "discountPrice": 5499.9,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1047-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2559.9,
+     "discountPrice": 1919.9,
+     "stock": 21
+    }
+   ],
+   "images": [
+    "/images/rugs/leyla-sisal-hali-krem-1047-1.svg",
+    "/images/rugs/leyla-sisal-hali-krem-1047-2.svg"
+   ],
+   "createdDaysAgo": 34
+  },
+  {
+   "name": "Pera Soyut Abstract - Mor 1048",
+   "slug": "pera-soyut-abstract-mor-1048",
+   "skuBase": "HE-1048",
+   "category": "soyut-abstract",
+   "style": "abstract",
+   "color": "Mor",
+   "hex": "#6b3f73",
+   "featured": true,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1048-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2289.9,
+     "discountPrice": 1949.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1048-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4139.9,
+     "discountPrice": 3519.9,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1048-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 6399.9,
+     "discountPrice": 5439.9,
+     "stock": 25
+    },
+    {
+     "sku": "HE-1048-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2819.9,
+     "discountPrice": 2399.9,
+     "stock": 1
+    }
+   ],
+   "images": [
+    "/images/rugs/pera-soyut-abstract-mor-1048-1.svg",
+    "/images/rugs/pera-soyut-abstract-mor-1048-2.svg"
+   ],
+   "createdDaysAgo": 26
+  },
+  {
+   "name": "Galata Soyut Abstract - Hardal 1049",
+   "slug": "galata-soyut-abstract-hardal-1049",
+   "skuBase": "HE-1049",
+   "category": "soyut-abstract",
+   "style": "abstract",
+   "color": "Hardal",
+   "hex": "#c9952b",
+   "featured": false,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1049-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1549.9,
+     "discountPrice": 1239.9,
+     "stock": 9
+    },
+    {
+     "sku": "HE-1049-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2129.9,
+     "discountPrice": 1699.9,
+     "stock": 21
+    },
+    {
+     "sku": "HE-1049-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 2369.9,
+     "discountPrice": 1899.9,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1049-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4479.9,
+     "discountPrice": 3579.9,
+     "stock": 8
+    },
+    {
+     "sku": "HE-1049-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 7349.9,
+     "discountPrice": 5879.9,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1049-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 2989.9,
+     "discountPrice": 2389.9,
+     "stock": 24
+    }
+   ],
+   "images": [
+    "/images/rugs/galata-soyut-abstract-hardal-1049-1.svg",
+    "/images/rugs/galata-soyut-abstract-hardal-1049-2.svg"
+   ],
+   "createdDaysAgo": 45
+  },
+  {
+   "name": "Sümela Vintage Halı - Bordo 1050",
+   "slug": "sumela-vintage-hali-bordo-1050",
+   "skuBase": "HE-1050",
+   "category": "vintage-hali",
+   "style": "vintage",
+   "color": "Bordo",
+   "hex": "#7a1f2b",
+   "featured": true,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1050-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1569.9,
+     "discountPrice": 1259.9,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1050-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2849.9,
+     "discountPrice": 2279.9,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1050-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 3019.9,
+     "discountPrice": 2419.9,
+     "stock": 15
+    },
+    {
+     "sku": "HE-1050-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 5599.9,
+     "discountPrice": 4479.9,
+     "stock": 25
+    },
+    {
+     "sku": "HE-1050-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 8109.9,
+     "discountPrice": 6489.9,
+     "stock": 20
+    },
+    {
+     "sku": "HE-1050-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3509.9,
+     "discountPrice": 2809.9,
+     "stock": 0
+    }
+   ],
+   "images": [
+    "/images/rugs/sumela-vintage-hali-bordo-1050-1.svg",
+    "/images/rugs/sumela-vintage-hali-bordo-1050-2.svg"
+   ],
+   "createdDaysAgo": 0
+  },
+  {
+   "name": "Mardin Vintage Halı - Bordo 1051",
+   "slug": "mardin-vintage-hali-bordo-1051",
+   "skuBase": "HE-1051",
+   "category": "vintage-hali",
+   "style": "vintage",
+   "color": "Bordo",
+   "hex": "#7a1f2b",
+   "featured": true,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1051-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1659.9,
+     "discountPrice": null,
+     "stock": 22
+    },
+    {
+     "sku": "HE-1051-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2549.9,
+     "discountPrice": null,
+     "stock": 7
+    },
+    {
+     "sku": "HE-1051-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 3189.9,
+     "discountPrice": null,
+     "stock": 3
+    },
+    {
+     "sku": "HE-1051-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4759.9,
+     "discountPrice": null,
+     "stock": 14
+    },
+    {
+     "sku": "HE-1051-200290",
+     "widthCm": 200,
+     "lengthCm": 290,
+     "price": 8979.9,
+     "discountPrice": null,
+     "stock": 13
+    },
+    {
+     "sku": "HE-1051-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3479.9,
+     "discountPrice": null,
+     "stock": 0
+    }
+   ],
+   "images": [
+    "/images/rugs/mardin-vintage-hali-bordo-1051-1.svg",
+    "/images/rugs/mardin-vintage-hali-bordo-1051-2.svg"
+   ],
+   "createdDaysAgo": 17
+  },
+  {
+   "name": "Bodrum Vintage Halı - Mavi 1052",
+   "slug": "bodrum-vintage-hali-mavi-1052",
+   "skuBase": "HE-1052",
+   "category": "vintage-hali",
+   "style": "vintage",
+   "color": "Mavi",
+   "hex": "#3b6e8f",
+   "featured": false,
+   "collections": [
+    "vintage-ruhu"
+   ],
+   "variants": [
+    {
+     "sku": "HE-1052-80150",
+     "widthCm": 80,
+     "lengthCm": 150,
+     "price": 1939.9,
+     "discountPrice": null,
+     "stock": 16
+    },
+    {
+     "sku": "HE-1052-100200",
+     "widthCm": 100,
+     "lengthCm": 200,
+     "price": 2579.9,
+     "discountPrice": null,
+     "stock": 8
+    },
+    {
+     "sku": "HE-1052-120180",
+     "widthCm": 120,
+     "lengthCm": 180,
+     "price": 3399.9,
+     "discountPrice": null,
+     "stock": 10
+    },
+    {
+     "sku": "HE-1052-160230",
+     "widthCm": 160,
+     "lengthCm": 230,
+     "price": 4989.9,
+     "discountPrice": null,
+     "stock": 0
+    },
+    {
+     "sku": "HE-1052-80300",
+     "widthCm": 80,
+     "lengthCm": 300,
+     "price": 3679.9,
+     "discountPrice": null,
+     "stock": 14
+    }
+   ],
+   "images": [
+    "/images/rugs/bodrum-vintage-hali-mavi-1052-1.svg",
+    "/images/rugs/bodrum-vintage-hali-mavi-1052-2.svg"
+   ],
+   "createdDaysAgo": 87
+  }
+ ],
+ "care": "Düzenli olarak düşük güçte süpürün. Lekeleri bekletmeden nemli bezle tamponlayarak temizleyin. Doğrudan güneş ışığından koruyun."
+}

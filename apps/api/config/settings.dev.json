@@ -1,0 +1,33 @@
+{
+  "env": "development",
+  "port": 4000,
+  "brand": { "name": "HALI EVİ", "whatsapp": "905555555555" },
+  "cors": { "origins": ["http://localhost:3000"] },
+  "db": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "user": "hali",
+    "password": "hali",
+    "database": "hali",
+    "pool": { "min": 0, "max": 10 }
+  },
+  "redis": { "url": "redis://127.0.0.1:6379", "keyPrefix": "hali:dev:" },
+  "cache": { "homeTtlSeconds": 300, "catalogTtlSeconds": 120 },
+  "jwt": {
+    "accessSecret": "dev-access-secret-change-me-0123456789",
+    "refreshSecret": "dev-refresh-secret-change-me-0123456789",
+    "accessTtl": "15m",
+    "refreshTtl": "7d"
+  },
+  "rateLimit": { "store": "redis", "windowMs": 60000, "max": 300, "authMax": 20 },
+  "commerce": {
+    "currency": "TRY",
+    "shippingFee": 149.9,
+    "freeShippingThreshold": 1500,
+    "installments": [
+      { "minTotal": 15000, "maxCount": 5 },
+      { "minTotal": 10000, "maxCount": 3 }
+    ]
+  },
+  "logging": { "level": "debug", "dir": "./logs", "accessLog": true }
+}
