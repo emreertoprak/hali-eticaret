@@ -105,7 +105,7 @@ export const orderStatusBody = z
   .object({
     status: z.enum(ORDER_STATUSES),
     carrier: z.string().trim().min(2).max(60).optional(),
-    trackingNumber: z.string().trim().min(3).max(80).optional(),
+    trackingNumber: z.string().trim().min(3, 'Takip numarası en az 3 karakter olmalı.').max(80).optional(),
   })
   .refine((b) => b.status !== 'shipped' || (b.carrier && b.trackingNumber), {
     message: 'Kargoya verirken kargo firması ve takip numarası gerekli.',

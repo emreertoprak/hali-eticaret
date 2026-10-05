@@ -1,6 +1,6 @@
 'use client';
 
-import { LogOut, MapPin, Package } from 'lucide-react';
+import { LayoutDashboard, LogOut, MapPin, Package } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -19,6 +19,11 @@ export default function AccountPage() {
           <h1 className="font-serif text-[34px] font-semibold">Merhaba, {user?.firstName}</h1>
           <p className="mt-1 text-muted">{user?.email}</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {user?.role === 'admin' && (
+              <Link href="/yonetim" className="flex items-center gap-3 rounded-xl border border-charcoal bg-charcoal p-5 text-white shadow-card hover:shadow-card-hover">
+                <LayoutDashboard /> <span className="font-bold">Yönetim Paneli</span>
+              </Link>
+            )}
             <Link href="/hesabim/siparisler" className="flex items-center gap-3 rounded-xl border border-line bg-white p-5 shadow-card hover:shadow-card-hover">
               <Package /> <span className="font-bold">Siparişlerim</span>
             </Link>
